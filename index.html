@@ -1,97 +1,313 @@
-import time
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FUPRE PHY101 CBT Practice (SLT)</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1, h2, h3 { color: #1a3c6d; text-align: center; }
+    .info-box {
+      background: #e3f2fd;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+    .question {
+      background: white;
+      padding: 24px;
+      margin: 30px 0;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .question.active { display: block; }
+    .options label {
+      display: block;
+      margin: 12px 0;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .options label:hover { background: #f0f8ff; border-color: #90caf9; }
+    input[type="radio"] { margin-right: 12px; }
+    button {
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      margin: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #1976d2;
+      color: white;
+    }
+    button:hover { background: #1565c0; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    #nav-buttons { text-align: center; margin: 30px 0; }
+    #result {
+      text-align: center;
+      font-size: 1.3rem;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-top: 40px;
+      display: none;
+    }
+    .score-good  { color: #2e7d32; }
+    .score-bad   { color: #c62828; }
+    #mistakes { margin-top: 50px; text-align: left; }
+    .missed-q {
+      background: #fff3f3;
+      border-left: 5px solid #d32f2f;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+    .missed-q h4 { margin-top: 0; color: #b71c1c; }
+    .correct-ans { 
+      background: #e8f5e9; 
+      padding: 12px; 
+      border-radius: 6px; 
+      margin-top: 16px; 
+      font-weight: bold; 
+      color: #2e7d32; 
+    }
+    #timer { font-size: 1.3rem; color: #d81b60; font-weight: bold; }
+  </style>
+</head>
+<body>
 
-def run_fupre_cbt():
-    # Full list of 50 PHY101 Questions based on FUPRE SLT Past Patterns
-    questions = [
-        # Units, Dimensions & Vectors
-        {"q": "Which of the following is a dimensionless quantity?", "o": ["A) Power", "B) Velocity", "C) Strain", "D) Pressure"], "a": "C"},
-        {"q": "The dimension [M][L]^2[T]^-3 represents which physical quantity?", "o": ["A) Work", "B) Power", "C) Force", "D) Energy"], "a": "B"},
-        {"q": "What is the SI unit of Viscosity?", "o": ["A) N/m", "B) kg/ms", "C) kg/ms^2", "D) Pascal second"], "a": "D"},
-        {"q": "The dimension of the gravitational constant (G) is?", "o": ["A) [M]^-1[L]^3[T]^-2", "B) [M][L]^2[T]^-2", "C) [M]^-1[L]^2[T]^-1", "D) [M][L]^-1[T]^2"], "a": "A"},
-        {"q": "Two vectors are perpendicular to each other if their _____ is zero.", "o": ["A) Dot product", "B) Cross product", "C) Sum", "D) Difference"], "a": "A"},
-        {"q": "Find the magnitude of vector A = 3i + 4j.", "o": ["A) 7", "B) 12", "C) 5", "D) 25"], "a": "C"},
-        {"q": "Which of these is a scalar quantity?", "o": ["A) Displacement", "B) Acceleration", "C) Electric Field", "D) Work"], "a": "D"},
-        {"q": "The cross product of two parallel vectors is:", "o": ["A) Zero", "B) Maximum", "C) 1", "D) Infinite"], "a": "A"},
-        {"q": "The dimension of Impulse is the same as that of:", "o": ["A) Force", "B) Energy", "C) Momentum", "D) Power"], "a": "C"},
-        {"q": "The prefix 'Pico' represents a multiple of:", "o": ["A) 10^-9", "B) 10^-12", "C) 10^-15", "D) 10^-6"], "a": "B"},
+<h1>FUPRE PHY101 CBT Practice Test (SLT)</h1>
+<div class="info-box">
+  Total Questions: 50  |  Recommended Time: 60 minutes
+  <div id="timer">Time taken: 0:00</div>
+</div>
 
-        # Kinematics
-        {"q": "At what angle is the range of a projectile maximum?", "o": ["A) 90 deg", "B) 45 deg", "C) 30 deg", "D) 60 deg"], "a": "B"},
-        {"q": "The slope of a velocity-time graph represents:", "o": ["A) Velocity", "B) Displacement", "C) Acceleration", "D) Power"], "a": "C"},
-        {"q": "A ball is dropped from a height of 20m. Time to hit the ground (g=10m/s^2)?", "o": ["A) 1s", "B) 2s", "C) 4s", "D) 10s"], "a": "B"},
-        {"q": "A car starts from rest and accelerates at 2m/s^2 for 10s. Distance covered?", "o": ["A) 20m", "B) 50m", "C) 100m", "D) 200m"], "a": "C"},
-        {"q": "The area under a velocity-time graph represents:", "o": ["A) Acceleration", "B) Displacement", "C) Speed", "D) Force"], "a": "B"},
-        {"q": "A projectile is fired at 320m/s at 30 deg. Time to reach max height?", "o": ["A) 32s", "B) 16s", "C) 8s", "D) 64s"], "a": "B"},
-        {"q": "The horizontal component of a projectile's velocity is:", "o": ["A) Zero", "B) Constant", "C) Increasing", "D) Decreasing"], "a": "B"},
-        {"q": "Centripetal acceleration is directed towards the:", "o": ["A) Tangent", "B) Center", "C) Outwards", "D) Upwards"], "a": "B"},
-        {"q": "An object moving at constant speed in a circle has:", "o": ["A) Zero acceleration", "B) Constant velocity", "C) Changing velocity", "D) No force"], "a": "C"},
-        {"q": "The equation v^2 = u^2 + 2as is used for:", "o": ["A) Uniform motion", "B) Uniform acceleration", "C) Circular motion", "D) Projectile only"], "a": "B"},
+<div id="quiz">
+  <!-- Questions inserted by JS -->
+</div>
 
-        # Dynamics & Energy
-        {"q": "Newton's First Law is also known as the Law of:", "o": ["A) Momentum", "B) Inertia", "C) Gravity", "D) Force"], "a": "B"},
-        {"q": "A force of 100N acts on a 5kg mass. What is the acceleration?", "o": ["A) 5m/s^2", "B) 10m/s^2", "C) 20m/s^2", "D) 500m/s^2"], "a": "C"},
-        {"q": "Work done is zero when the angle between Force and Displacement is:", "o": ["A) 0 deg", "B) 90 deg", "C) 180 deg", "D) 45 deg"], "a": "B"},
-        {"q": "A body of 2kg moves at 4m/s. Kinetic energy?", "o": ["A) 8J", "B) 16J", "C) 32J", "D) 4J"], "a": "B"},
-        {"q": "The rate of change of momentum is proportional to:", "o": ["A) Work", "B) Velocity", "C) Force", "D) Impulse"], "a": "C"},
-        {"q": "Power is defined as:", "o": ["A) F x d", "B) F x v", "C) m x v", "D) m x a"], "a": "B"},
-        {"q": "In an inelastic collision, what is conserved?", "o": ["A) Kinetic energy", "B) Momentum", "C) Velocity", "D) Both A and B"], "a": "B"},
-        {"q": "Friction that exists before an object starts moving is:", "o": ["A) Kinetic", "B) Dynamic", "C) Static", "D) Rolling"], "a": "C"},
-        {"q": "Work done by a centripetal force is:", "o": ["A) Positive", "B) Negative", "C) Zero", "D) Infinite"], "a": "C"},
-        {"q": "Mechanical energy is the sum of:", "o": ["A) KE + PE", "B) Heat + Work", "C) Force + Dist", "D) Mass + Vel"], "a": "A"},
+<div id="nav-buttons">
+  <button id="prev">Previous</button>
+  <button id="next">Next</button>
+  <button id="submit" style="background:#d32f2f;">Finish & Submit</button>
+</div>
 
-        # Properties of Matter (Crucial for SLT)
-        {"q": "Archimedes' Principle relates upthrust to:", "o": ["A) Object mass", "B) Weight of fluid displaced", "C) Object density", "D) Fluid volume"], "a": "B"},
-        {"q": "The ratio of tensile stress to tensile strain is:", "o": ["A) Bulk Modulus", "B) Young's Modulus", "C) Shear Modulus", "D) Poisson Ratio"], "a": "B"},
-        {"q": "Calculate stress on a wire of area 0.01m^2 under 100N force.", "o": ["A) 100Pa", "B) 1000Pa", "C) 10000Pa", "D) 10Pa"], "a": "C"},
-        {"q": "Surface tension is caused by:", "o": ["A) Adhesive forces", "B) Cohesive forces", "C) Gravity", "D) Friction"], "a": "B"},
-        {"q": "Hydraulic brakes work based on:", "o": ["A) Pascal's Law", "B) Boyle's Law", "C) Hooke's Law", "D) Newton's Law"], "a": "A"},
-        {"q": "Hooke's Law is valid only within the:", "o": ["A) Plastic limit", "B) Yield point", "C) Elastic limit", "D) Breaking point"], "a": "C"},
-        {"q": "The reciprocal of Bulk Modulus is:", "o": ["A) Elasticity", "B) Compressibility", "C) Viscosity", "D) Plasticity"], "a": "B"},
-        {"q": "Viscosity of liquids ____ with temperature increase.", "o": ["A) Increases", "B) Decreases", "C) Remains same", "D) Doubles"], "a": "B"},
-        {"q": "Bernoulli's principle is based on the conservation of:", "o": ["A) Momentum", "B) Mass", "C) Energy", "D) Charge"], "a": "C"},
-        {"q": "The SI unit of Pressure is:", "o": ["A) Newton", "B) Pascal", "C) Joule", "D) Watt"], "a": "B"},
+<div id="result">
+  <h2>Exam Finished!</h2>
+  <p>Your Score: <strong id="score" class="score-good"></strong> / 50</p>
+  <p>Percentage: <strong id="percentage"></strong>%</p>
+  <p>Time Taken: <strong id="time-taken"></strong> minutes</p>
 
-        # Thermal Physics
-        {"q": "At what temperature do Celsius and Fahrenheit coincide?", "o": ["A) 0 deg", "B) 32 deg", "C) -40 deg", "D) 100 deg"], "a": "C"},
-        {"q": "Heat required to change solid to liquid at constant temp:", "o": ["A) Specific heat", "B) Latent heat of fusion", "C) Heat capacity", "D) Latent heat of vaporization"], "a": "B"},
-        {"q": "Mode of heat transfer that requires no medium:", "o": ["A) Conduction", "B) Convection", "C) Radiation", "D) Evaporation"], "a": "C"},
-        {"q": "Boyle's Law relates:", "o": ["A) P and T", "B) V and T", "C) P and V", "D) V and n"], "a": "C"},
-        {"q": "The temperature 27 deg C in Kelvin is:", "o": ["A) 300K", "B) 273K", "C) 310K", "D) 246K"], "a": "A"},
-        {"q": "The internal energy of an ideal gas depends only on:", "o": ["A) Pressure", "B) Volume", "C) Temperature", "D) Mass"], "a": "C"},
-        {"q": "Specific heat capacity unit:", "o": ["A) J/kg", "B) J/kg.K", "C) W/mK", "D) J/K"], "a": "B"},
-        {"q": "An adiabatic process is one in which:", "o": ["A) P is constant", "B) T is constant", "C) No heat enters/leaves", "D) V is constant"], "a": "C"},
-        {"q": "The first law of thermodynamics is a statement of:", "o": ["A) Energy conservation", "B) Mass conservation", "C) Entropy", "D) Efficiency"], "a": "A"},
-        {"q": "Linear expansion is a property of:", "o": ["A) Gases", "B) Liquids", "C) Solids", "D) All phases"], "a": "C"}
-    ]
+  <div id="mistakes">
+    <h3>Questions You Got Wrong</h3>
+    <div id="missed-list"></div>
+  </div>
 
-    score = 0
-    print("--- FUPRE PHY101 CBT PRACTICE TEST (SLT) ---")
-    print("Total Questions: 50 | Time Allowed: 60 Mins\n")
-    
-    start_time = time.time()
-    
-    for i, item in enumerate(questions):
-        print(f"Question {i+1}: {item['q']}")
-        for option in item['o']:
-            print(option)
-            
-        user_choice = input("Your Answer (A, B, C, or D): ").strip().upper()
-        
-        if user_choice == item['a']:
-            print("✅ Correct!\n")
-            score += 1
-        else:
-            print(f"❌ Incorrect. The correct answer was {item['a']}.\n")
-            
-    end_time = time.time()
-    duration = round((end_time - start_time) / 60, 2)
-    
-    print("--------------------------------------")
-    print(f"EXAM FINISHED!")
-    print(f"Your Total Score: {score}/50")
-    print(f"Percentage: {(score/50)*100}%")
-    print(f"Time Taken: {duration} minutes")
-    print("--------------------------------------")
+  <button onclick="location.reload()" style="margin-top:30px;">Restart Quiz</button>
+</div>
 
-if __name__ == "__main__":
-    run_fupre_cbt()
+<script>
+// ────────────────────────────────────────────────
+const questions = [
+  // (your original 50 questions array – unchanged)
+  {"q": "Which of the following is a dimensionless quantity?", "o": ["A) Power", "B) Velocity", "C) Strain", "D) Pressure"], "a": "C"},
+  {"q": "The dimension [M][L]^2[T]^-3 represents which physical quantity?", "o": ["A) Work", "B) Power", "C) Force", "D) Energy"], "a": "B"},
+  {"q": "What is the SI unit of Viscosity?", "o": ["A) N/m", "B) kg/ms", "C) kg/ms^2", "D) Pascal second"], "a": "D"},
+  {"q": "The dimension of the gravitational constant (G) is?", "o": ["A) [M]^-1[L]^3[T]^-2", "B) [M][L]^2[T]^-2", "C) [M]^-1[L]^2[T]^-1", "D) [M][L]^-1[T]^2"], "a": "A"},
+  {"q": "Two vectors are perpendicular to each other if their _____ is zero.", "o": ["A) Dot product", "B) Cross product", "C) Sum", "D) Difference"], "a": "A"},
+  {"q": "Find the magnitude of vector A = 3i + 4j.", "o": ["A) 7", "B) 12", "C) 5", "D) 25"], "a": "C"},
+  {"q": "Which of these is a scalar quantity?", "o": ["A) Displacement", "B) Acceleration", "C) Electric Field", "D) Work"], "a": "D"},
+  {"q": "The cross product of two parallel vectors is:", "o": ["A) Zero", "B) Maximum", "C) 1", "D) Infinite"], "a": "A"},
+  {"q": "The dimension of Impulse is the same as that of:", "o": ["A) Force", "B) Energy", "C) Momentum", "D) Power"], "a": "C"},
+  {"q": "The prefix 'Pico' represents a multiple of:", "o": ["A) 10^-9", "B) 10^-12", "C) 10^-15", "D) 10^-6"], "a": "B"},
+  {"q": "At what angle is the range of a projectile maximum?", "o": ["A) 90 deg", "B) 45 deg", "C) 30 deg", "D) 60 deg"], "a": "B"},
+  {"q": "The slope of a velocity-time graph represents:", "o": ["A) Velocity", "B) Displacement", "C) Acceleration", "D) Power"], "a": "C"},
+  {"q": "A ball is dropped from a height of 20m. Time to hit the ground (g=10m/s^2)?", "o": ["A) 1s", "B) 2s", "C) 4s", "D) 10s"], "a": "B"},
+  {"q": "A car starts from rest and accelerates at 2m/s^2 for 10s. Distance covered?", "o": ["A) 20m", "B) 50m", "C) 100m", "D) 200m"], "a": "C"},
+  {"q": "The area under a velocity-time graph represents:", "o": ["A) Acceleration", "B) Displacement", "C) Speed", "D) Force"], "a": "B"},
+  {"q": "A projectile is fired at 320m/s at 30 deg. Time to reach max height?", "o": ["A) 32s", "B) 16s", "C) 8s", "D) 64s"], "a": "B"},
+  {"q": "The horizontal component of a projectile's velocity is:", "o": ["A) Zero", "B) Constant", "C) Increasing", "D) Decreasing"], "a": "B"},
+  {"q": "Centripetal acceleration is directed towards the:", "o": ["A) Tangent", "B) Center", "C) Outwards", "D) Upwards"], "a": "B"},
+  {"q": "An object moving at constant speed in a circle has:", "o": ["A) Zero acceleration", "B) Constant velocity", "C) Changing velocity", "D) No force"], "a": "C"},
+  {"q": "The equation v^2 = u^2 + 2as is used for:", "o": ["A) Uniform motion", "B) Uniform acceleration", "C) Circular motion", "D) Projectile only"], "a": "B"},
+  {"q": "Newton's First Law is also known as the Law of:", "o": ["A) Momentum", "B) Inertia", "C) Gravity", "D) Force"], "a": "B"},
+  {"q": "A force of 100N acts on a 5kg mass. What is the acceleration?", "o": ["A) 5m/s^2", "B) 10m/s^2", "C) 20m/s^2", "D) 500m/s^2"], "a": "C"},
+  {"q": "Work done is zero when the angle between Force and Displacement is:", "o": ["A) 0 deg", "B) 90 deg", "C) 180 deg", "D) 45 deg"], "a": "B"},
+  {"q": "A body of 2kg moves at 4m/s. Kinetic energy?", "o": ["A) 8J", "B) 16J", "C) 32J", "D) 4J"], "a": "B"},
+  {"q": "The rate of change of momentum is proportional to:", "o": ["A) Work", "B) Velocity", "C) Force", "D) Impulse"], "a": "C"},
+  {"q": "Power is defined as:", "o": ["A) F x d", "B) F x v", "C) m x v", "D) m x a"], "a": "B"},
+  {"q": "In an inelastic collision, what is conserved?", "o": ["A) Kinetic energy", "B) Momentum", "C) Velocity", "D) Both A and B"], "a": "B"},
+  {"q": "Friction that exists before an object starts moving is:", "o": ["A) Kinetic", "B) Dynamic", "C) Static", "D) Rolling"], "a": "C"},
+  {"q": "Work done by a centripetal force is:", "o": ["A) Positive", "B) Negative", "C) Zero", "D) Infinite"], "a": "C"},
+  {"q": "Mechanical energy is the sum of:", "o": ["A) KE + PE", "B) Heat + Work", "C) Force + Dist", "D) Mass + Vel"], "a": "A"},
+  {"q": "Archimedes' Principle relates upthrust to:", "o": ["A) Object mass", "B) Weight of fluid displaced", "C) Object density", "D) Fluid volume"], "a": "B"},
+  {"q": "The ratio of tensile stress to tensile strain is:", "o": ["A) Bulk Modulus", "B) Young's Modulus", "C) Shear Modulus", "D) Poisson Ratio"], "a": "B"},
+  {"q": "Calculate stress on a wire of area 0.01m^2 under 100N force.", "o": ["A) 100Pa", "B) 1000Pa", "C) 10000Pa", "D) 10Pa"], "a": "C"},
+  {"q": "Surface tension is caused by:", "o": ["A) Adhesive forces", "B) Cohesive forces", "C) Gravity", "D) Friction"], "a": "B"},
+  {"q": "Hydraulic brakes work based on:", "o": ["A) Pascal's Law", "B) Boyle's Law", "C) Hooke's Law", "D) Newton's Law"], "a": "A"},
+  {"q": "Hooke's Law is valid only within the:", "o": ["A) Plastic limit", "B) Yield point", "C) Elastic limit", "D) Breaking point"], "a": "C"},
+  {"q": "The reciprocal of Bulk Modulus is:", "o": ["A) Elasticity", "B) Compressibility", "C) Viscosity", "D) Plasticity"], "a": "B"},
+  {"q": "Viscosity of liquids ____ with temperature increase.", "o": ["A) Increases", "B) Decreases", "C) Remains same", "D) Doubles"], "a": "B"},
+  {"q": "Bernoulli's principle is based on the conservation of:", "o": ["A) Momentum", "B) Mass", "C) Energy", "D) Charge"], "a": "C"},
+  {"q": "The SI unit of Pressure is:", "o": ["A) Newton", "B) Pascal", "C) Joule", "D) Watt"], "a": "B"},
+  {"q": "At what temperature do Celsius and Fahrenheit coincide?", "o": ["A) 0 deg", "B) 32 deg", "C) -40 deg", "D) 100 deg"], "a": "C"},
+  {"q": "Heat required to change solid to liquid at constant temp:", "o": ["A) Specific heat", "B) Latent heat of fusion", "C) Heat capacity", "D) Latent heat of vaporization"], "a": "B"},
+  {"q": "Mode of heat transfer that requires no medium:", "o": ["A) Conduction", "B) Convection", "C) Radiation", "D) Evaporation"], "a": "C"},
+  {"q": "Boyle's Law relates:", "o": ["A) P and T", "B) V and T", "C) P and V", "D) V and n"], "a": "C"},
+  {"q": "The temperature 27 deg C in Kelvin is:", "o": ["A) 300K", "B) 273K", "C) 310K", "D) 246K"], "a": "A"},
+  {"q": "The internal energy of an ideal gas depends only on:", "o": ["A) Pressure", "B) Volume", "C) Temperature", "D) Mass"], "a": "C"},
+  {"q": "Specific heat capacity unit:", "o": ["A) J/kg", "B) J/kg.K", "C) W/mK", "D) J/K"], "a": "B"},
+  {"q": "An adiabatic process is one in which:", "o": ["A) P is constant", "B) T is constant", "C) No heat enters/leaves", "D) V is constant"], "a": "C"},
+  {"q": "The first law of thermodynamics is a statement of:", "o": ["A) Energy conservation", "B) Mass conservation", "C) Entropy", "D) Efficiency"], "a": "A"},
+  {"q": "Linear expansion is a property of:", "o": ["A) Gases", "B) Liquids", "C) Solids", "D) All phases"], "a": "C"}
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answers = new Array(questions.length).fill(null);
+let startTime = Date.now();
+let timerInterval;
+
+const quizDiv     = document.getElementById("quiz");
+const prevBtn     = document.getElementById("prev");
+const nextBtn     = document.getElementById("next");
+const submitBtn   = document.getElementById("submit");
+const resultDiv   = document.getElementById("result");
+const missedList  = document.getElementById("missed-list");
+
+// Render questions
+questions.forEach((q, i) => {
+  const div = document.createElement("div");
+  div.className = "question";
+  div.id = `q${i}`;
+  div.innerHTML = `
+    <h3>Question ${i+1} of 50</h3>
+    <p>${q.q}</p>
+    <div class="options">
+      ${q.o.map((opt, idx) => `
+        <label>
+          <input type="radio" name="q${i}" value="${String.fromCharCode(65 + idx)}">
+          ${opt}
+        </label>
+      `).join("")}
+    </div>
+  `;
+  quizDiv.appendChild(div);
+});
+
+function showQuestion(n) {
+  document.querySelectorAll(".question").forEach(el => el.classList.remove("active"));
+  document.getElementById(`q${n}`).classList.add("active");
+
+  prevBtn.disabled = n === 0;
+  nextBtn.textContent = n === questions.length - 1 ? "Finish" : "Next";
+  nextBtn.style.background = n === questions.length - 1 ? "#388e3c" : "#1976d2";
+
+  const selected = answers[n];
+  if (selected) {
+    const radio = document.querySelector(`input[name="q${n}"][value="${selected}"]`);
+    if (radio) radio.checked = true;
+  }
+
+  currentQuestion = n;
+}
+
+function updateTimer() {
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const min = Math.floor(elapsed / 60);
+  const sec = elapsed % 60;
+  document.getElementById("timer").textContent = `Time taken: ${min}:${sec.toString().padStart(2,"0")}`;
+}
+
+function showResult() {
+  clearInterval(timerInterval);
+  const timeTakenMin = ((Date.now() - startTime) / 60000).toFixed(2);
+
+  // Calculate final score
+  score = 0;
+  for (let i = 0; i < questions.length; i++) {
+    if (answers[i] === questions[i].a) score++;
+  }
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("nav-buttons").style.display = "none";
+  resultDiv.style.display = "block";
+
+  document.getElementById("score").textContent = score;
+  document.getElementById("percentage").textContent = ((score / 50) * 100).toFixed(1);
+  document.getElementById("time-taken").textContent = timeTakenMin;
+
+  // Show missed questions
+  missedList.innerHTML = "";
+  let hasMistakes = false;
+
+  questions.forEach((q, i) => {
+    const userAns = answers[i];
+    if (userAns !== q.a) {
+      hasMistakes = true;
+      const div = document.createElement("div");
+      div.className = "missed-q";
+      div.innerHTML = `
+        <h4>Question ${i+1}: ${q.q}</h4>
+        <div class="options">
+          ${q.o.map((opt, idx) => {
+            const letter = String.fromCharCode(65 + idx);
+            let style = "";
+            if (letter === q.a) style = 'style="font-weight:bold;color:#2e7d32;"';
+            if (letter === userAns && userAns !== q.a) style = 'style="text-decoration:line-through;color:#c62828;"';
+            return `<div ${style}>${opt}</div>`;
+          }).join("")}
+        </div>
+        <div class="correct-ans">Correct answer: ${q.a}) ${q.o[q.o.findIndex(o => o.startsWith(q.a + ")"))].substring(3)}</div>
+      `;
+      missedList.appendChild(div);
+    }
+  });
+
+  if (!hasMistakes) {
+    missedList.innerHTML = "<p style='color:#2e7d32;font-size:1.2rem;'>Perfect! You got everything correct 🎉</p>";
+  }
+}
+
+// ─── Navigation & Submit ────────────────────────────────────
+prevBtn.onclick = () => {
+  if (currentQuestion > 0) showQuestion(currentQuestion - 1);
+};
+
+nextBtn.onclick = () => {
+  const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+  if (selected) answers[currentQuestion] = selected.value;
+
+  if (currentQuestion < questions.length - 1) {
+    showQuestion(currentQuestion + 1);
+  } else {
+    showResult();
+  }
+};
+
+submitBtn.onclick = () => {
+  if (confirm("Submit now? You cannot go back.")) {
+    showResult();
+  }
+};
+
+// Init
+showQuestion(0);
+timerInterval = setInterval(updateTimer, 1000);
+
+</script>
+</body>
+</html>
