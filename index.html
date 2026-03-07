@@ -118,7 +118,7 @@
   </p>
 
   <div id="mistakes">
-    <h3 style="text-align:center; margin:40px 0 20px;">Review: Questions You Got Wrong + Easy Explanations</h3>
+    <h3 style="text-align:center; margin:40px 0 20px;">Review: All Questions + Explanations</h3>
     <div id="missed-list"></div>
   </div>
 
@@ -304,38 +304,41 @@ function showResult() {
   document.getElementById("time-taken").textContent = timeTaken;
 
   missedList.innerHTML = "";
-  let hasMistakes = false;
-
+  
   questions.forEach((q, i) => {
     const userAns = answers[i];
-    if (userAns !== q.a) {
-      hasMistakes = true;
-      const correctIdx = q.o.findIndex(o => o.startsWith(q.a + ")"));
-      const correctText = q.o[correctIdx] || q.a;
+    const isCorrect = userAns === q.a;
+    
+    const correctIdx = q.o.findIndex(o => o.startsWith(q.a + ")"));
+    const correctText = q.o[correctIdx] || q.a;
 
-      const div = document.createElement("div");
-      div.className = "missed-q";
-      div.innerHTML = `
-        <h4>Question ${i+1}: ${q.q}</h4>
-        <div class="options">
-          ${q.o.map((opt, idx) => {
-            const letter = String.fromCharCode(65 + idx);
-            let extra = "";
-            if (letter === userAns && userAns !== q.a) extra = 'class="user-ans-wrong"';
-            if (letter === q.a) extra = 'style="color:#2e7d32; font-weight:bold;"';
-            return `<div ${extra}>${opt}</div>`;
-          }).join("")}
-        </div>
-        <div class="correct-ans-box">Correct → ${correctText}</div>
-        <div class="explanation"><strong>Easy explanation (for beginners):</strong><br>${q.exp}</div>
-      `;
-      missedList.appendChild(div);
-    }
+    const div = document.createElement("div");
+    div.className = "missed-q";
+    div.style.background = isCorrect ? "#e8f5e9" : "#fff8f8";
+    div.style.borderLeft = isCorrect ? "6px solid #2e7d32" : "6px solid #d32f2f";
+
+    div.innerHTML = `
+      <h4>Question ${i+1}: ${q.q}</h4>
+      <div class="options">
+        ${q.o.map((opt, idx) => {
+          const letter = String.fromCharCode(65 + idx);
+          let extra = "";
+          if (letter === userAns) {
+            extra = isCorrect 
+              ? 'style="color:#2e7d32; font-weight:bold;"' 
+              : 'class="user-ans-wrong"';
+          }
+          if (letter === q.a && !isCorrect) {
+            extra = 'style="color:#2e7d32; font-weight:bold;"';
+          }
+          return `<div ${extra}>${opt}</div>`;
+        }).join("")}
+      </div>
+      <div class="correct-ans-box">Correct → ${correctText}</div>
+      <div class="explanation"><strong>Easy explanation (for beginners):</strong><br>${q.exp}</div>
+    `;
+    missedList.appendChild(div);
   });
-
-  if (!hasMistakes) {
-    missedList.innerHTML = '<p style="color:#2e7d32; font-size:1.4rem; text-align:center; padding:20px;">Perfect score! You nailed every question 🎉 Keep it up!</p>';
-  }
 }
 
 // Events
@@ -353,7 +356,7 @@ nextBtn.onclick = () => {
 };
 
 submitBtn.onclick = () => {
-  if (confirm("Ready to finish and see explanations for any wrong answers?")) {
+  if (confirm("Ready to finish and see explanations for all questions?")) {
     showResult();
   }
 };
