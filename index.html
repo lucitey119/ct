@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FUPRE PHY101 CBT Practice (SLT) – Auto-Save + Explanations</title>
+  <title>FUPRE PHY101 CBT Practice (SLT) – Full Explanations</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -123,125 +123,118 @@
   </div>
 
   <div style="text-align:center; margin:50px 0;">
-    <button onclick="clearStorageAndReload()" style="font-size:1.1rem; padding:12px 30px; background:#7b1fa2; color:white;">Clear Saved Progress & Restart</button>
-    <button onclick="location.reload()" style="font-size:1.2rem; padding:16px 40px; margin-left:20px;">Restart Quiz (Keep Save)</button>
+    <button onclick="location.reload()" style="font-size:1.2rem; padding:16px 40px;">Restart Quiz</button>
   </div>
 </div>
 
 <script>
 // ────────────────────────────────────────────────
-// STORAGE KEYS
-const STORAGE_KEY = 'fupre_phy101_progress';
-const STORAGE_TIMESTAMP_KEY = 'fupre_phy101_timestamp';
-
-// All 50 questions with explanations
 const questions = [
   { q: "Which of the following is a dimensionless quantity?", o: ["A) Power", "B) Velocity", "C) Strain", "D) Pressure"], a: "C",
-    exp: "Strain is change in length divided by original length. Both are lengths, so units cancel → no unit (dimensionless). Power, velocity, pressure all have units." },
+    exp: "Strain is change in length divided by original length. Both are lengths, so the units cancel out completely — no unit left (dimensionless). Power has watts, velocity has m/s, pressure has pascals — all have units." },
   { q: "The dimension [M][L]^2[T]^-3 represents which physical quantity?", o: ["A) Work", "B) Power", "C) Force", "D) Energy"], a: "B",
-    exp: "Power = work / time = (force × distance) / time. Work has [M L² T⁻²], divide by [T] → [M L² T⁻³]." },
+    exp: "Power is work done per second = energy/time. Work/energy has dimensions [M L² T⁻²], divided by time [T] gives [M L² T⁻³]. Force is [M L T⁻²], work/energy is [M L² T⁻²]." },
   { q: "What is the SI unit of Viscosity?", o: ["A) N/m", "B) kg/ms", "C) kg/ms^2", "D) Pascal second"], a: "D",
-    exp: "Viscosity (fluid thickness) SI unit is Pascal-second (Pa·s) = N·s/m² = kg/(m·s). Pascal-second is the official name." },
+    exp: "Viscosity measures 'stickiness' of fluids (like honey vs water). The standard SI unit is Pascal-second (Pa·s), which is the same as kg/(m·s). N/m is surface tension, kg/m s² is not standard." },
   { q: "The dimension of the gravitational constant (G) is?", o: ["A) [M]^-1[L]^3[T]^-2", "B) [M][L]^2[T]^-2", "C) [M]^-1[L]^2[T]^-1", "D) [M][L]^-1[T]^2"], a: "A",
-    exp: "F = G m₁ m₂ / r² → G = F r² / (m₁ m₂) → [M L T⁻²] [L²] / [M²] = [M⁻¹ L³ T⁻²]." },
+    exp: "From Newton's law: F = G m₁ m₂ / r² → rearrange: G = F r² / (m₁ m₂). Force [M L T⁻²], r² [L²], m₁ m₂ [M²] → G = [M L T⁻² L² / M²] = [M⁻¹ L³ T⁻²]." },
   { q: "Two vectors are perpendicular to each other if their _____ is zero.", o: ["A) Dot product", "B) Cross product", "C) Sum", "D) Difference"], a: "A",
-    exp: "Dot product = |A||B| cosθ. At 90° (perpendicular), cos90°=0 → dot product=0. Cross product is max at 90°." },
+    exp: "Dot product = |A| |B| cosθ. When vectors are at 90° (perpendicular), cos90° = 0, so dot product = 0. Cross product is maximum at 90°, sum or difference can be anything." },
   { q: "Find the magnitude of vector A = 3i + 4j.", o: ["A) 7", "B) 12", "C) 5", "D) 25"], a: "C",
-    exp: "Magnitude = √(3² + 4²) = √(9+16) = √25 = 5. Pythagoras for vector components." },
+    exp: "Magnitude = √(x² + y²) = √(3² + 4²) = √(9+16) = √25 = 5. It's like Pythagoras theorem for the triangle formed by the components. 3-4-5 is a common right triangle." },
   { q: "Which of these is a scalar quantity?", o: ["A) Displacement", "B) Acceleration", "C) Electric Field", "D) Work"], a: "D",
-    exp: "Scalar = magnitude only, no direction. Work is F·d (scalar product) → just number. Others have direction." },
+    exp: "Scalars have only size (magnitude), no direction. Work = force × distance (with cosθ), but result is just a number with direction ignored — scalar. Others have direction." },
   { q: "The cross product of two parallel vectors is:", o: ["A) Zero", "B) Maximum", "C) 1", "D) Infinite"], a: "A",
-    exp: "Cross product = |A||B| sinθ. Parallel → θ=0° or 180° → sin=0 → cross product=0." },
+    exp: "Cross product = |A| |B| sinθ. Parallel vectors have θ = 0° or 180°, sin0° = sin180° = 0 → cross product = 0. (No area in parallelogram they form.)" },
   { q: "The dimension of Impulse is the same as that of:", o: ["A) Force", "B) Energy", "C) Momentum", "D) Power"], a: "C",
-    exp: "Impulse = force × time = change in momentum → same dimensions as momentum [M L T⁻¹]." },
+    exp: "Impulse = force × time = change in momentum. So dimensions same as momentum [M L T⁻¹]. Force [M L T⁻²], energy [M L² T⁻²], power [M L² T⁻³]." },
   { q: "The prefix 'Pico' represents a multiple of:", o: ["A) 10^-9", "B) 10^-12", "C) 10^-15", "D) 10^-6"], a: "B",
-    exp: "Pico = 10⁻¹² (pico-second = 10⁻¹² s). Nano=10⁻⁹, micro=10⁻⁶, femto=10⁻¹⁵." },
+    exp: "Pico means 10⁻¹² (very tiny, like picosecond = 10⁻¹² s). Nano=10⁻⁹, micro=10⁻⁶, femto=10⁻¹⁵." },
   { q: "At what angle is the range of a projectile maximum?", o: ["A) 90 deg", "B) 45 deg", "C) 30 deg", "D) 60 deg"], a: "B",
-    exp: "Range = (v² sin2θ)/g. sin2θ max=1 when 2θ=90° → θ=45°. At 90° range=0 (straight up)." },
+    exp: "Range = (v² sin2θ)/g. sin2θ is biggest (value=1) when 2θ=90° → θ=45°. At 90° it's straight up (zero range), at 30°/60° sin is less than max." },
   { q: "The slope of a velocity-time graph represents:", o: ["A) Velocity", "B) Displacement", "C) Acceleration", "D) Power"], a: "C",
-    exp: "Slope = Δv / Δt = acceleration. Area under curve = displacement." },
-  { q: "A ball is dropped from a height of 20m. Time to hit the ground (g=10m/s^2)?", o: ["A) 1s", "B) 2s", "C) 4s", "D) 10s"], a: "B",
-    exp: "s = ½ g t² → 20 = ½×10×t² → t²=4 → t=2 s." },
-  { q: "A car starts from rest and accelerates at 2m/s^2 for 10s. Distance covered?", o: ["A) 20m", "B) 50m", "C) 100m", "D) 200m"], a: "C",
-    exp: "s = ½ a t² = ½×2×100 = 100 m." },
+    exp: "Slope = rise/run = Δv / Δt = acceleration. Area under graph = displacement, height = velocity." },
+  { q: "A ball is dropped from a height of 20m. Time to hit the ground (g=10m/s²)?", o: ["A) 1s", "B) 2s", "C) 4s", "D) 10s"], a: "B",
+    exp: "s = ½ g t² (initial speed=0) → 20 = ½ × 10 × t² → 20 = 5 t² → t²=4 → t=2 s. Like free fall basics." },
+  { q: "A car starts from rest and accelerates at 2m/s² for 10s. Distance covered?", o: ["A) 20m", "B) 50m", "C) 100m", "D) 200m"], a: "C",
+    exp: "s = ut + ½ at², u=0 → s = ½ × 2 × 10² = 100 m. Or average speed (0+20)/2 =10 m/s ×10s=100m." },
   { q: "The area under a velocity-time graph represents:", o: ["A) Acceleration", "B) Displacement", "C) Speed", "D) Force"], a: "B",
-    exp: "Area = velocity × time = displacement (with sign in 1D)." },
+    exp: "Area = average velocity × time = displacement (vector, but in 1D it's distance with sign). Slope is acceleration." },
   { q: "A projectile is fired at 320m/s at 30 deg. Time to reach max height?", o: ["A) 32s", "B) 16s", "C) 8s", "D) 64s"], a: "B",
-    exp: "v_y = 320 sin30° = 160 m/s. Time to max height = v_y / g = 160 / 10 = 16 s." },
+    exp: "Vertical velocity = v sinθ = 320 × 0.5 = 160 m/s. At max height v_y=0, so t = v_y / g = 160 / 10 = 16 s. (g≈10)" },
   { q: "The horizontal component of a projectile's velocity is:", o: ["A) Zero", "B) Constant", "C) Increasing", "D) Decreasing"], a: "B",
-    exp: "No horizontal acceleration (ignore air) → horizontal velocity constant." },
+    exp: "No horizontal force (ignore air), so horizontal velocity stays constant. Vertical changes due to gravity." },
   { q: "Centripetal acceleration is directed towards the:", o: ["A) Tangent", "B) Center", "C) Outwards", "D) Upwards"], a: "B",
-    exp: "It pulls toward the center to make path circular." },
+    exp: "It pulls object toward center of circle to keep it curving — that's why string tension or gravity points inward." },
   { q: "An object moving at constant speed in a circle has:", o: ["A) Zero acceleration", "B) Constant velocity", "C) Changing velocity", "D) No force"], a: "C",
-    exp: "Direction changes constantly → velocity (vector) changes → acceleration exists." },
-  { q: "The equation v^2 = u^2 + 2as is used for:", o: ["A) Uniform motion", "B) Uniform acceleration", "C) Circular motion", "D) Projectile only"], a: "B",
-    exp: "Kinematics equation for constant (uniform) acceleration." },
+    exp: "Speed constant, but direction changes → velocity (vector) changes → acceleration exists (centripetal). Force needed too." },
+  { q: "The equation v² = u² + 2as is used for:", o: ["A) Uniform motion", "B) Uniform acceleration", "C) Circular motion", "D) Projectile only"], a: "B",
+    exp: "It's one of kinematics equations for constant (uniform) acceleration. Works for straight line or vertical projectile part." },
   { q: "Newton's First Law is also known as the Law of:", o: ["A) Momentum", "B) Inertia", "C) Gravity", "D) Force"], a: "B",
-    exp: "Objects resist change in motion unless net force acts → law of inertia." },
-  { q: "A force of 100N acts on a 5kg mass. What is the acceleration?", o: ["A) 5m/s^2", "B) 10m/s^2", "C) 20m/s^2", "D) 500m/s^2"], a: "C",
-    exp: "a = F/m = 100 / 5 = 20 m/s²." },
+    exp: "Object at rest stays at rest, moving stays moving at constant speed — unless net force acts. This property is called inertia." },
+  { q: "A force of 100N acts on a 5kg mass. What is the acceleration?", o: ["A) 5m/s²", "B) 10m/s²", "C) 20m/s²", "D) 500m/s²"], a: "C",
+    exp: "F = m a → a = F/m = 100 / 5 = 20 m/s². Newton's second law: bigger force or smaller mass → bigger acceleration." },
   { q: "Work done is zero when the angle between Force and Displacement is:", o: ["A) 0 deg", "B) 90 deg", "C) 180 deg", "D) 45 deg"], a: "B",
-    exp: "W = F d cosθ. cos90°=0 → work=0 (force perpendicular to motion)." },
+    exp: "Work = F d cosθ. cos90° = 0 → work=0 (e.g. carrying bag horizontally — force up, motion forward)." },
   { q: "A body of 2kg moves at 4m/s. Kinetic energy?", o: ["A) 8J", "B) 16J", "C) 32J", "D) 4J"], a: "B",
-    exp: "KE = ½ m v² = ½ × 2 × 16 = 16 J." },
+    exp: "KE = ½ m v² = ½ × 2 × 16 = 16 J. Double speed → 4× energy, half mass → half energy." },
   { q: "The rate of change of momentum is proportional to:", o: ["A) Work", "B) Velocity", "C) Force", "D) Impulse"], a: "C",
-    exp: "F = Δp / Δt → force = rate of change of momentum." },
+    exp: "F = Δp / Δt → force = rate of change of momentum. That's Newton's second law in momentum form." },
   { q: "Power is defined as:", o: ["A) F x d", "B) F x v", "C) m x v", "D) m x a"], a: "B",
-    exp: "Power = work/time = F d / t = F v." },
+    exp: "Power = work/time = (F d)/t = F (d/t) = F v. Rate of doing work or transferring energy." },
   { q: "In an inelastic collision, what is conserved?", o: ["A) Kinetic energy", "B) Momentum", "C) Velocity", "D) Both A and B"], a: "B",
-    exp: "Momentum conserved always (no external force). KE lost in inelastic (to heat/sound)." },
+    exp: "Momentum always conserved if no external force. In inelastic, kinetic energy is lost (to heat/sound/deformation)." },
   { q: "Friction that exists before an object starts moving is:", o: ["A) Kinetic", "B) Dynamic", "C) Static", "D) Rolling"], a: "C",
-    exp: "Static friction prevents starting motion. Kinetic acts after sliding." },
+    exp: "Static friction prevents motion from starting — up to maximum value. Kinetic acts after sliding begins." },
   { q: "Work done by a centripetal force is:", o: ["A) Positive", "B) Negative", "C) Zero", "D) Infinite"], a: "C",
-    exp: "Centripetal force ⊥ velocity → angle 90° → work=0." },
+    exp: "Centripetal force is always perpendicular to velocity (tangent) → angle 90° → cos90°=0 → work=0. Speed constant." },
   { q: "Mechanical energy is the sum of:", o: ["A) KE + PE", "B) Heat + Work", "C) Force + Dist", "D) Mass + Vel"], a: "A",
-    exp: "Mechanical energy = kinetic + potential energy." },
+    exp: "Mechanical energy = kinetic + potential (gravitational/elastic). Conserved if no friction/non-conservative forces." },
   { q: "Archimedes' Principle relates upthrust to:", o: ["A) Object mass", "B) Weight of fluid displaced", "C) Object density", "D) Fluid volume"], a: "B",
-    exp: "Buoyant force = weight of fluid displaced." },
+    exp: "Upthrust (buoyant force) = weight of fluid displaced. Why ships float: displaced water weight = ship weight." },
   { q: "The ratio of tensile stress to tensile strain is:", o: ["A) Bulk Modulus", "B) Young's Modulus", "C) Shear Modulus", "D) Poisson Ratio"], a: "B",
-    exp: "Young's modulus = longitudinal stress / strain." },
-  { q: "Calculate stress on a wire of area 0.01m^2 under 100N force.", o: ["A) 100Pa", "B) 1000Pa", "C) 10000Pa", "D) 10Pa"], a: "C",
-    exp: "Stress = F / A = 100 / 0.01 = 10,000 Pa." },
+    exp: "Young's modulus = stress/strain for stretching/pulling (length change). Bulk for volume, shear for twisting." },
+  { q: "Calculate stress on a wire of area 0.01m² under 100N force.", o: ["A) 100Pa", "B) 1000Pa", "C) 10000Pa", "D) 10Pa"], a: "C",
+    exp: "Stress = force / area = 100 / 0.01 = 10,000 Pa. Smaller area → bigger stress (same force hurts more)." },
   { q: "Surface tension is caused by:", o: ["A) Adhesive forces", "B) Cohesive forces", "C) Gravity", "D) Friction"], a: "B",
-    exp: "Cohesive forces between like molecules create surface 'skin' effect." },
+    exp: "Cohesive forces = attraction between same molecules (water-water). Makes surface act like stretched skin (drops spherical)." },
   { q: "Hydraulic brakes work based on:", o: ["A) Pascal's Law", "B) Boyle's Law", "C) Hooke's Law", "D) Newton's Law"], a: "A",
-    exp: "Pascal: pressure transmitted equally in enclosed fluid." },
+    exp: "Pascal: pressure applied to enclosed fluid transmitted equally everywhere. Small force on pedal → big force on brakes." },
   { q: "Hooke's Law is valid only within the:", o: ["A) Plastic limit", "B) Yield point", "C) Elastic limit", "D) Breaking point"], a: "C",
-    exp: "Hooke's law (F ∝ extension) holds only in elastic region." },
+    exp: "Hooke's law: force proportional to extension (F=kx) — only in elastic region. Beyond elastic limit, permanent deformation." },
   { q: "The reciprocal of Bulk Modulus is:", o: ["A) Elasticity", "B) Compressibility", "C) Viscosity", "D) Plasticity"], a: "B",
-    exp: "Compressibility = 1 / Bulk modulus." },
+    exp: "Bulk modulus = stress / volume strain (how hard to compress). Reciprocal = how easy to compress = compressibility." },
   { q: "Viscosity of liquids ____ with temperature increase.", o: ["A) Increases", "B) Decreases", "C) Remains same", "D) Doubles"], a: "B",
-    exp: "Higher temperature → molecules move faster → less resistance → viscosity decreases." },
+    exp: "Heat makes molecules move faster → less 'stickiness' → viscosity decreases (honey flows easier when warm)." },
   { q: "Bernoulli's principle is based on the conservation of:", o: ["A) Momentum", "B) Mass", "C) Energy", "D) Charge"], a: "C",
-    exp: "Energy conservation: faster speed → lower pressure." },
+    exp: "Bernoulli: faster fluid → lower pressure. From energy conservation: total energy (pressure + kinetic + potential) constant along streamline." },
   { q: "The SI unit of Pressure is:", o: ["A) Newton", "B) Pascal", "C) Joule", "D) Watt"], a: "B",
-    exp: "Pressure = force/area = N/m² = Pascal." },
+    exp: "Pressure = force / area → N/m² = Pascal (Pa). Newton is force, joule energy, watt power." },
   { q: "At what temperature do Celsius and Fahrenheit coincide?", o: ["A) 0 deg", "B) 32 deg", "C) -40 deg", "D) 100 deg"], a: "C",
-    exp: "Solve C = (9/5)C + 32 → C = -40." },
+    exp: "Set °C = °F: C = (9/5)C + 32 → -4/5 C = 32 → C = -40°. Both scales read -40 at same point." },
   { q: "Heat required to change solid to liquid at constant temp:", o: ["A) Specific heat", "B) Latent heat of fusion", "C) Heat capacity", "D) Latent heat of vaporization"], a: "B",
-    exp: "Latent heat of fusion = heat to melt without temperature change." },
+    exp: "Latent heat of fusion = heat to melt ice without temperature rise (energy breaks bonds). Vaporization for liquid to gas." },
   { q: "Mode of heat transfer that requires no medium:", o: ["A) Conduction", "B) Convection", "C) Radiation", "D) Evaporation"], a: "C",
-    exp: "Radiation (electromagnetic waves) needs no medium (sun to earth)." },
+    exp: "Radiation = infrared waves (like sun heat to earth through space). Conduction needs solid contact, convection needs fluid." },
   { q: "Boyle's Law relates:", o: ["A) P and T", "B) V and T", "C) P and V", "D) V and n"], a: "C",
-    exp: "P V = constant (fixed temperature)." },
+    exp: "Boyle: P V = constant (at fixed temp). Squeeze balloon → pressure up, volume down." },
   { q: "The temperature 27 deg C in Kelvin is:", o: ["A) 300K", "B) 273K", "C) 310K", "D) 246K"], a: "A",
-    exp: "K = °C + 273 = 300 K." },
+    exp: "K = °C + 273 → 27 + 273 = 300 K. Absolute zero is 0 K = -273°C." },
   { q: "The internal energy of an ideal gas depends only on:", o: ["A) Pressure", "B) Volume", "C) Temperature", "D) Mass"], a: "C",
-    exp: "For ideal gas, U depends only on temperature." },
+    exp: "For ideal gas, internal energy = function of temperature only (kinetic energy of molecules). Not on P or V directly." },
   { q: "Specific heat capacity unit:", o: ["A) J/kg", "B) J/kg.K", "C) W/mK", "D) J/K"], a: "B",
-    exp: "J/(kg·K) = energy per kg per degree change." },
+    exp: "Specific heat = heat needed to raise 1 kg by 1 K → J/(kg·K). J/kg is not enough (no temp change), W/mK is thermal conductivity." },
   { q: "An adiabatic process is one in which:", o: ["A) P is constant", "B) T is constant", "C) No heat enters/leaves", "D) V is constant"], a: "C",
-    exp: "Adiabatic = Q = 0 (no heat transfer)." },
+    exp: "Adiabatic = no heat exchange (Q=0). Like quick pump compression — temp rises from work done." },
   { q: "The first law of thermodynamics is a statement of:", o: ["A) Energy conservation", "B) Mass conservation", "C) Entropy", "D) Efficiency"], a: "A",
-    exp: "ΔU = Q − W → energy conserved." },
+    exp: "ΔU = Q - W → change in internal energy = heat added minus work done. Energy conserved overall." },
   { q: "Linear expansion is a property of:", o: ["A) Gases", "B) Liquids", "C) Solids", "D) All phases"], a: "C",
-    exp: "Linear expansion refers to length change → solids have fixed shape and show noticeable linear expansion." }
+    exp: "Linear = length increase with heat. Solids have fixed shape/length that expands noticeably (rails, bridges). Gases/liquids expand in volume, not 'linear'." }
 ];
 
 let currentQuestion = 0;
 let answers = new Array(questions.length).fill(null);
 let startTime = Date.now();
-let elapsedTimeSaved = 0;
 let timerInterval;
 
 const quizDiv     = document.getElementById("quiz");
@@ -251,38 +244,7 @@ const submitBtn   = document.getElementById("submit");
 const resultDiv   = document.getElementById("result");
 const missedList  = document.getElementById("missed-list");
 
-// ─── STORAGE FUNCTIONS ─────────────────────────────────────────
-function saveProgress() {
-  const data = {
-    answers,
-    currentQuestion,
-    elapsedTime: Date.now() - startTime + elapsedTimeSaved,
-    timestamp: new Date().toLocaleString('en-GB', { timeZone: 'Africa/Lagos' })
-  };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-function loadProgress() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (!saved) return false;
-  try {
-    const data = JSON.parse(saved);
-    answers = data.answers || new Array(questions.length).fill(null);
-    currentQuestion = data.currentQuestion || 0;
-    elapsedTimeSaved = data.elapsedTime || 0;
-    startTime = Date.now() - elapsedTimeSaved;
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function clearStorageAndReload() {
-  localStorage.removeItem(STORAGE_KEY);
-  location.reload();
-}
-
-// ─── Render questions ──────────────────────────────────────────
+// Render questions
 questions.forEach((q, i) => {
   const div = document.createElement("div");
   div.className = "question";
@@ -305,13 +267,18 @@ questions.forEach((q, i) => {
 function showQuestion(n) {
   document.querySelectorAll(".question").forEach(el => el.classList.remove("active"));
   document.getElementById(`q${n}`).classList.add("active");
+
   prevBtn.disabled = n === 0;
   nextBtn.textContent = n === questions.length - 1 ? "Finish" : "Next";
   nextBtn.style.background = n === questions.length - 1 ? "#388e3c" : "#1976d2";
+
   const sel = answers[n];
-  if (sel) document.querySelector(`input[name="q${n}"][value="${sel}"]`)?.checked = true;
+  if (sel) {
+    const radio = document.querySelector(`input[name="q${n}"][value="${sel}"]`);
+    if (radio) radio.checked = true;
+  }
+
   currentQuestion = n;
-  saveProgress();
 }
 
 function updateTimer() {
@@ -323,8 +290,10 @@ function updateTimer() {
 
 function showResult() {
   clearInterval(timerInterval);
-  const totalTime = (Date.now() - startTime + elapsedTimeSaved) / 60000;
-  let score = answers.reduce((s, ans, i) => s + (ans === questions[i].a ? 1 : 0), 0);
+  const timeTaken = ((Date.now() - startTime) / 60000).toFixed(2);
+
+  let score = 0;
+  answers.forEach((ans, i) => { if (ans === questions[i].a) score++; });
 
   document.getElementById("quiz").style.display = "none";
   document.getElementById("nav-buttons").style.display = "none";
@@ -332,15 +301,16 @@ function showResult() {
 
   document.getElementById("score").textContent = score;
   document.getElementById("percentage").textContent = ((score / 50) * 100).toFixed(1);
-  document.getElementById("time-taken").textContent = totalTime.toFixed(2);
+  document.getElementById("time-taken").textContent = timeTaken;
 
   missedList.innerHTML = "";
   let hasMistakes = false;
 
   questions.forEach((q, i) => {
-    if (answers[i] !== q.a) {
+    const userAns = answers[i];
+    if (userAns !== q.a) {
       hasMistakes = true;
-      const correctIdx = q.o.findIndex(o => o.startsWith(q.a));
+      const correctIdx = q.o.findIndex(o => o.startsWith(q.a + ")"));
       const correctText = q.o[correctIdx] || q.a;
 
       const div = document.createElement("div");
@@ -350,30 +320,31 @@ function showResult() {
         <div class="options">
           ${q.o.map((opt, idx) => {
             const letter = String.fromCharCode(65 + idx);
-            let style = "";
-            if (letter === answers[i] && answers[i] !== q.a) style = 'class="user-ans-wrong"';
-            if (letter === q.a) style = 'style="color:#2e7d32; font-weight:bold;"';
-            return `<div ${style}>${opt}</div>`;
+            let extra = "";
+            if (letter === userAns && userAns !== q.a) extra = 'class="user-ans-wrong"';
+            if (letter === q.a) extra = 'style="color:#2e7d32; font-weight:bold;"';
+            return `<div ${extra}>${opt}</div>`;
           }).join("")}
         </div>
-        <div class="correct-ans-box">Correct answer: ${correctText}</div>
-        <div class="explanation"><strong>Easy explanation:</strong><br>${q.exp}</div>
+        <div class="correct-ans-box">Correct → ${correctText}</div>
+        <div class="explanation"><strong>Easy explanation (for beginners):</strong><br>${q.exp}</div>
       `;
       missedList.appendChild(div);
     }
   });
 
   if (!hasMistakes) {
-    missedList.innerHTML = '<p style="color:#2e7d32; font-size:1.4rem; text-align:center;">Perfect! You got all correct 🎉</p>';
+    missedList.innerHTML = '<p style="color:#2e7d32; font-size:1.4rem; text-align:center; padding:20px;">Perfect score! You nailed every question 🎉 Keep it up!</p>';
   }
 }
 
-// ─── Event listeners ───────────────────────────────────────────
+// Events
 prevBtn.onclick = () => { if (currentQuestion > 0) showQuestion(currentQuestion - 1); };
 
 nextBtn.onclick = () => {
   const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
   if (selected) answers[currentQuestion] = selected.value;
+
   if (currentQuestion < questions.length - 1) {
     showQuestion(currentQuestion + 1);
   } else {
@@ -382,36 +353,15 @@ nextBtn.onclick = () => {
 };
 
 submitBtn.onclick = () => {
-  if (confirm("Submit now?")) showResult();
+  if (confirm("Ready to finish and see explanations for any wrong answers?")) {
+    showResult();
+  }
 };
 
-quizDiv.addEventListener('change', e => {
-  if (e.target.type === 'radio') {
-    const idx = +e.target.name.replace('q', '');
-    answers[idx] = e.target.value;
-    saveProgress();
-  }
-});
+// Start quiz
+showQuestion(0);
+timerInterval = setInterval(updateTimer, 1000);
 
-// ─── Initialization ────────────────────────────────────────────
-window.addEventListener('load', () => {
-  const hasSave = loadProgress();
-  if (hasSave) {
-    const ts = localStorage.getItem(STORAGE_TIMESTAMP_KEY) || new Date().toLocaleString();
-    if (confirm(`Found saved progress from ${ts}.\nContinue where you left off?\n\n[Yes] = resume   [No] = start new`)) {
-      showQuestion(currentQuestion);
-    } else {
-      answers.fill(null);
-      currentQuestion = 0;
-      elapsedTimeSaved = 0;
-      startTime = Date.now();
-      showQuestion(0);
-    }
-  } else {
-    showQuestion(0);
-  }
-  timerInterval = setInterval(updateTimer, 1000);
-});
 </script>
 </body>
 </html>
