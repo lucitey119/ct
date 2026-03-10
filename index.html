@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FUPRE GST 100L CBT Practice (SLT) – Full Review</title>
+  <title>FUPRE GST 100L CBT Practice – 35 Questions</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -63,8 +63,8 @@
       margin-top: 40px;
       display: none;
     }
-    .score-good  { color: #2e7d32; font-size: 1.8rem; }
-    #all-review { margin-top: 40px; }
+    .score-good { color: #2e7d32; font-size: 1.8rem; }
+    #full-review { margin-top: 40px; }
     .review-q {
       background: #f8f9fa;
       border-left: 6px solid #1976d2;
@@ -73,8 +73,8 @@
       border-radius: 8px;
     }
     .review-q h4 { margin: 0 0 12px; color: #1a3c6d; }
-    .user-correct   { color: #2e7d32; font-weight: bold; }
-    .user-wrong     { color: #c62828; text-decoration: line-through; font-weight: bold; }
+    .user-correct   { color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 4px 8px; border-radius: 4px; }
+    .user-wrong     { color: #c62828; text-decoration: line-through; font-weight: bold; background: #ffebee; padding: 4px 8px; border-radius: 4px; }
     .correct-answer { background: #e8f5e9; padding: 12px; border-radius: 6px; margin: 12px 0; font-weight: bold; color: #2e7d32; }
     .explanation    { background: #f5faff; padding: 16px; border-radius: 8px; margin-top: 16px; border-left: 5px solid #1976d2; }
     #timer { font-size: 1.3rem; color: #d81b60; font-weight: bold; }
@@ -82,7 +82,7 @@
 </head>
 <body>
 
-<h1>FUPRE GST 100L CBT Practice (SLT – First Semester)</h1>
+<h1>FUPRE GST 100L CBT Practice (35 Questions)</h1>
 <div class="info-box">
   Total Questions: 35  |  Recommended Time: 45–60 minutes
   <div id="timer">Time taken: 0:00</div>
@@ -93,7 +93,7 @@
 <div id="nav-buttons">
   <button id="prev">Previous</button>
   <button id="next">Next</button>
-  <button id="submit" style="background:#d32f2f;">Finish & Review All Questions</button>
+  <button id="submit" style="background:#d32f2f;">Finish & Full Review</button>
 </div>
 
 <div id="result">
@@ -104,8 +104,8 @@
     Time Taken: <strong id="time-taken"></strong> minutes
   </p>
 
-  <div id="all-review">
-    <h3 style="text-align:center; margin:40px 0 20px;">Full Review: All Questions with Your Answers & Explanations</h3>
+  <div id="full-review">
+    <h3 style="text-align:center; margin:40px 0 20px;">Full Review: All 35 Questions with Your Answers & Explanations</h3>
     <div id="review-list"></div>
   </div>
 
@@ -115,78 +115,79 @@
 </div>
 
 <script>
-// 35 GST questions with correct answers & explanations
+// ────────────────────────────────────────────────
+// All 35 questions with correct answers & explanations
 const questions = [
-  { q: "Which of the following is the best definition of communication?", o: ["A. The exchange of information between two or more persons.", "B. Talking loudly to an audience.", "C. Writing only formal letters.", "D. Sending data without feedback."], a: "A",
-    exp: "Communication is about sharing and exchanging information (ideas, feelings, facts) between people, usually with the goal of understanding. It includes feedback." },
-  { q: "Choose the sentence that is grammatically correct:", o: ["A. Each of the students are ready.", "B. Neither of the options were suitable.", "C. Everyone have finished their work.", "D. The committee has reached a decision."], a: "D",
-    exp: "When the subject is 'committee' (collective noun), we use singular verb 'has'. 'Each', 'neither', 'everyone' also take singular verbs → A, B, C are wrong." },
-  { q: "The word 'coherent' most nearly means:", o: ["A. Confusing", "B. Logical and consistent", "C. Short and vague", "D. Loud and clear"], a: "B",
-    exp: "Coherent writing or speech is clear, logical, and sticks together well — ideas connect properly (opposite of confusing or vague)." },
-  { q: "Which is an example of active listening?", o: ["A. Interrupting to give advice immediately.", "B. Nodding and summarizing what the speaker said.", "C. Thinking about your reply while the speaker talks.", "D. Checking your phone during the talk."], a: "B",
-    exp: "Active listening means fully focusing, showing interest (nodding), and giving feedback (summarizing) to show you understand — not interrupting or being distracted." },
-  { q: "On what date did Nigeria gain independence?", o: ["A. 1 October 1960", "B. 29 May 1960", "C. 12 December 1960", "D. 1 January 1960"], a: "A",
-    exp: "Nigeria became independent from British colonial rule on October 1, 1960. October 1 is celebrated as Independence Day." },
-  { q: "Which one is a core element of national unity?", o: ["A. Strict regional isolation", "B. Shared national symbols and values", "C. Different official languages for each state", "D. Separate currencies per region"], a: "B",
-    exp: "National unity comes from things everyone shares: flag, anthem, values like peace & patriotism, common history — not separation or division." },
-  { q: "Citizenship primarily involves which duty?", o: ["A. Avoiding all taxes", "B. Participating in civic life and obeying laws", "C. Moving abroad permanently", "D. Rejecting public education"], a: "B",
-    exp: "A good citizen obeys laws, pays taxes, votes, serves the community, and respects rights of others — active participation in society." },
-  { q: "The voting age in Nigeria is:", o: ["A. 16 years", "B. 18 years", "C. 21 years", "D. 25 years"], a: "B",
-    exp: "According to the Nigerian Constitution (as amended), citizens must be at least 18 years old to vote in elections." },
-  { q: "Which of the following is a fundamental human right commonly recognized?", o: ["A. Freedom from petty chores", "B. Freedom of expression", "C. Right to unlimited property for all", "D. Freedom to break the law"], a: "B",
-    exp: "Freedom of expression (speech, opinion, press) is a basic human right protected in Nigeria's Constitution and international law." },
-  { q: "Entrepreneurship is best described as:", o: ["A. Starting and managing a business to make value and profit.", "B. Working as a civil servant only.", "C. Selling inherited property.", "D. Avoiding risk at all costs."], a: "A",
-    exp: "Entrepreneurship means identifying opportunities, starting a business, taking calculated risks, creating value/products, and aiming for profit/growth." },
-  { q: "Which item is essential in a business plan?", o: ["A. Owner’s favorite food", "B. Market analysis and financial projections", "C. The color of the office carpet", "D. Weekend plans of staff"], a: "B",
-    exp: "A good business plan must include realistic market research (customers, competitors) and financial forecasts (costs, revenue, profit) to show viability." },
-  { q: "A common source of startup finance is:", o: ["A. Telepathy", "B. Bootstrapping (personal savings)", "C. Ignoring expenses", "D. Refusing to charge customers"], a: "B",
-    exp: "Bootstrapping = using your own savings or revenue from early sales to fund the business — very common for small startups." },
-  { q: "Environmental sanitation primarily aims to:", o: ["A. Increase noise levels in a neighborhood", "B. Prevent disease by managing waste and water", "C. Remove green spaces for more buildings", "D. Promote littering to create jobs"], a: "B",
-    exp: "Sanitation = proper waste collection, clean water, toilets → stops spread of diseases like cholera, typhoid." },
-  { q: "Which practice reduces water-borne diseases?", o: ["A. Drinking untreated water", "B. Proper boiling or treating of drinking water", "C. Dumping waste into rivers", "D. Sharing unclean cups"], a: "B",
-    exp: "Boiling or using filters/chemicals kills germs in water → prevents diseases like diarrhoea, cholera." },
-  { q: "Solid waste management best practice includes:", o: ["A. Open dumping in waterways", "B. Segregation, recycling, and safe disposal", "C. Burning all waste in public spaces daily", "D. Throwing waste directly into drainage"], a: "B",
-    exp: "Best practice: separate waste (organic, plastic, etc.), recycle what can be reused, dispose safely in landfills or incinerators — reduces pollution." },
-  { q: "Ethics in public life is most concerned with:", o: ["A. Personal enrichment regardless of method", "B. Principles of right and wrong guiding behaviour", "C. Ignoring laws that are inconvenient", "D. Keeping secrets to avoid transparency"], a: "B",
-    exp: "Public ethics = moral principles (honesty, fairness, accountability) that guide how officials and citizens behave in society." },
-  { q: "Which behaviour best demonstrates integrity?", o: ["A. Cutting corners to meet targets", "B. Returning a found wallet to its owner", "C. Lying to avoid responsibility", "D. Claiming credit for another’s work"], a: "B",
-    exp: "Integrity = doing the right thing even when no one is watching — honesty, keeping promises, returning lost items." },
-  { q: "Corruption is best described as:", o: ["A. Honest public service", "B. Misuse of public office for private gain", "C. Transparent procurement processes", "D. Following procurement rules strictly"], a: "B",
-    exp: "Corruption = abuse of entrusted power (bribes, embezzlement, nepotism) for personal benefit — harms society." },
-  { q: "What is phishing in the context of ICT?", o: ["A. Online angling for sport", "B. Fraudulent attempts to obtain sensitive information via email or messages", "C. A safe way to share passwords", "D. A method of backing up files"], a: "B",
-    exp: "Phishing = fake emails/texts pretending to be from banks/official sites to trick you into giving passwords, card details, etc." },
-  { q: "A strong password should ideally include:", o: ["A. Only your birthdate", "B. A mix of letters, numbers, and symbols and be of reasonable length", "C. The word 'password' for easy recall", "D. Your pet’s name only"], a: "B",
-    exp: "Strong password: long (12+ characters), uppercase + lowercase + numbers + symbols — hard to guess or crack." },
-  { q: "The main difference between internet and intranet is:", o: ["A. Internet is only for schools, intranet is global", "B. Internet is public and global; intranet is a private internal network", "C. Intranet requires no security", "D. Internet is faster than intranet always"], a: "B",
-    exp: "Internet = worldwide public network. Intranet = private network inside one organization (company, school) — only staff/students can access." },
-  { q: "Email etiquette requires:", o: ["A. Using all caps to show importance", "B. Clear subject lines, polite tone, and concise content", "C. Sending large attachments without warning", "D. Ignoring recipients’ names"], a: "B",
-    exp: "Good email manners: meaningful subject, greet properly, be polite & brief, use proper grammar, don't SHOUT (all caps)." },
-  { q: "Critical thinking most directly involves:", o: ["A. Accepting information without question", "B. Evaluating evidence and reasoning logically", "C. Memorizing facts only", "D. Relying on rumours"], a: "B",
-    exp: "Critical thinking = questioning, analyzing evidence, spotting bias, drawing logical conclusions — not just accepting everything." },
-  { q: "An example of a logical fallacy is:", o: ["A. Ad hominem (attacking the person instead of the argument)", "B. Using verified data to support claims", "C. Checking multiple sources", "D. Defining terms clearly"], a: "A",
-    exp: "Ad hominem = attacking the speaker's character instead of addressing their argument (e.g. 'You can't be right because you're young')." },
-  { q: "Deductive reasoning is best illustrated by:", o: ["A. Observing many specific cases to form a general rule", "B. Starting with a general rule and applying it to specific cases", "C. Guessing without evidence", "D. Randomly selecting options"], a: "B",
-    exp: "Deductive: general truth → specific conclusion (All men are mortal. Socrates is a man → Socrates is mortal)." },
-  { q: "Time management technique SMART stands for:", o: ["A. Silly, Moderate, Ambiguous, Random, Timeless", "B. Specific, Measurable, Achievable, Relevant, Time-bound", "C. Slow, Mild, Atypical, Robertson, Timely", "D. Simple, Mysterious, Abstract, Rare, Tardy"], a: "B",
-    exp: "SMART goals: Specific, Measurable, Achievable, Relevant, Time-bound — helps make goals clear and realistic." },
-  { q: "The Cornell method is a system for:", o: ["A. Cooking recipes", "B. Note-taking and organizing lecture notes", "C. A type of rock music", "D. Designing buildings"], a: "B",
-    exp: "Cornell note-taking: divide page into cues, notes, summary sections — helps review and understand lectures better." },
-  { q: "Plagiarism means:", o: ["A. Properly citing all sources", "B. Presenting someone else’s work or ideas as your own without attribution", "C. Quoting sources with quotation marks and citation", "D. Writing original content only"], a: "B",
-    exp: "Plagiarism = copying text, ideas, code, images without giving credit — serious academic offence." },
-  { q: "The number of UN Sustainable Development Goals (SDGs) is:", o: ["A. 8", "B. 12", "C. 17", "D. 25"], a: "C",
-    exp: "There are 17 SDGs adopted by UN in 2015 — to end poverty, protect planet, ensure peace & prosperity by 2030." },
-  { q: "Which of the following best describes sustainable development?", o: ["A. Development that meets present needs without compromising future generations’ ability to meet theirs", "B. Unlimited exploitation of natural resources for immediate profit", "C. Development only for the richest countries", "D. Ignoring environmental impact for growth"], a: "A",
-    exp: "Sustainable development = balance economic growth, social inclusion, environmental protection so future generations are not harmed." },
-  { q: "Globalization primarily leads to:", o: ["A. Complete isolation of countries", "B. Increased international interaction and exchange of goods, services, ideas, and culture", "C. Fixed borders that prevent trade", "D. Only negative outcomes with no benefits"], a: "B",
-    exp: "Globalization = growing connection between countries through trade, technology, culture, migration — more exchange & interdependence." },
-  { q: "A primary goal of health education in campus GST is to:", o: ["A. Promote risky behaviours among students", "B. Equip students with knowledge to make healthy lifestyle choices", "C. Encourage neglecting personal hygiene", "D. Discourage use of health services"], a: "B",
-    exp: "Health education teaches nutrition, hygiene, disease prevention, mental health — so students can live healthier lives." },
-  { q: "Which is an effective stress management technique?", o: ["A. Continuous worrying without breaks", "B. Regular physical exercise, adequate sleep, and time management", "C. Ignoring deadlines completely", "D. Excessive caffeine and sleep deprivation"], a: "B",
-    exp: "Exercise releases endorphins, good sleep restores body, time management reduces pressure — proven ways to handle stress." },
-  { q: "Drug abuse prevention programs on campus usually emphasize:", o: ["A. The benefits of unregulated substance use", "B. Awareness, counselling, and access to support services", "C. Encouraging peers to try new substances", "D. Hiding incidents to avoid discipline"], a: "B",
-    exp: "Prevention focuses on education about risks, counselling, peer support, and referral to help services — not promotion or secrecy." },
-  { q: "Which is a good study habit for university students?", o: ["A. Cramming the night before every exam only", "B. Regular revision, creating study schedules, and active practice", "C. Avoiding textbooks and relying solely on rumours", "D. Skipping lectures frequently to catch up later"], a: "B",
-    exp: "Spaced revision, timetables, active recall (testing yourself) → better long-term memory and understanding than cramming." }
+  { q: "In phonetics, the initial sound in \"Mudiaga\" (/m/) is classified as a:", o: ["A. Voiceless bilabial plosive", "B. Voiced bilabial nasal", "C. Voiced alveolar approximant", "D. Voiceless velar fricative"], a: "B",
+    exp: "/m/ is made with both lips (bilabial), air flows through the nose (nasal), and vocal cords vibrate (voiced) → voiced bilabial nasal." },
+  { q: "The vowel sound in \"travails\" (novel title) is /eɪ/, making it a:", o: ["A. Monophthong", "B. Diphthong", "C. Triphthong", "D. Schwa"], a: "B",
+    exp: "/eɪ/ glides from /e/ to /ɪ/ in one syllable → diphthong (two vowel sounds together)." },
+  { q: "Stress pattern in \"degradation\" (environmental theme in the novel) places primary stress on:", o: ["A. de-", "B. gra-", "C. da-", "D. tion"], a: "B",
+    exp: "de-gra-DA-tion → primary stress on second syllable (gra-), common in words ending -ation." },
+  { q: "Intonation for the exclamatory sentence \"Overcome your travails!\" in a dramatic reading of the novel would typically be:", o: ["A. Rising", "B. Falling", "C. Rise-fall", "D. Level"], a: "B",
+    exp: "Exclamations usually end with falling intonation to show strong emotion/emphasis." },
+  { q: "Punctuation correction: \"Mudiagas clubfoot a result of pollution hindered his mobility.\" Missing:", o: ["A. Apostrophe in \"Mudiagas\" and comma after \"clubfoot\"", "B. Colon after \"pollution\"", "C. Dash after \"hindered\"", "D. No error"], a: "A",
+    exp: "Should be \"Mudiaga's clubfoot, a result of pollution, hindered his mobility.\" → possessive apostrophe + commas for appositive phrase." },
+  { q: "In punctuating dialogue from the novel: \"Education is key Mudiaga\" requires:", o: ["A. Comma after \"key\"", "B. Semicolon after \"key\"", "C. Quotation marks around the whole", "D. Exclamation mark only"], a: "A",
+    exp: "Direct address needs comma: \"Education is key, Mudiaga.\"" },
+  { q: "For a sentence listing effects of oil flaring: \"It causes health issues environmental damage and corruption\" – insert:", o: ["A. Commas after \"issues\" and \"damage\"", "B. Semicolons throughout", "C. Dashes for emphasis", "D. Colons for introduction"], a: "A",
+    exp: "Oxford comma optional but clear: \"health issues, environmental damage, and corruption.\"" },
+  { q: "Apostrophe usage in novel summary: \"The villagers suffering from companies negligence\" corrected to:", o: ["A. villagers' suffering; companies' negligence", "B. villager's suffering; company's negligence", "C. villagers suffering's; companies negligence's", "D. No change needed"], a: "A",
+    exp: "Plural possessive: villagers' (many villagers), companies' (many companies)." },
+  { q: "A formal letter from Mudiaga to oil companies protesting exploitation should use which closing if recipient unnamed?", o: ["A. Yours sincerely", "B. Yours faithfully", "C. Best regards", "D. Cheers"], a: "B",
+    exp: "When name unknown → \"Yours faithfully\". If name known → \"Yours sincerely\"." },
+  { q: "In a memo to community leaders on resilience (novel theme), the \"Subject\" line should be:", o: ["A. Concise and action-oriented, e.g., \"Addressing Disability Stigma\"", "B. A full paragraph", "C. Omitted for brevity", "D. Placed at the end"], a: "A",
+    exp: "Memo subject lines are short, clear, and tell the purpose immediately." },
+  { q: "Key difference between letter and memo in reporting novel events:", o: ["A. Memo lacks salutation; letter has formal close", "B. Letter is internal; memo external", "C. Memo uses paragraphs; letter bullet points", "D. Both require enclosures"], a: "A",
+    exp: "Memo is internal → no salutation/close usually. Letter is external/formal → has greeting & closing." },
+  { q: "A report on Niger Delta pollution (as depicted) would structure \"Methodology\" to describe:", o: ["A. Data collection methods, e.g., interviews with villagers", "B. Conclusions only", "C. Title and abstract", "D. Personal opinions"], a: "A",
+    exp: "Methodology explains how data was gathered (surveys, interviews, observation)." },
+  { q: "In report writing, the \"Discussion\" section for novel-inspired analysis uses which tense for interpreting findings?", o: ["A. Present simple for timeless truths", "B. Past perfect for background", "C. Future continuous for predictions", "D. Conditional for hypotheticals"], a: "A",
+    exp: "Discussion interprets results → present simple for general truths (e.g. 'Pollution causes health issues')." },
+  { q: "Executive summary in a report on environmental travails should:", o: ["A. Be concise, standalone, and highlight key points", "B. Include raw data tables", "C. Appear after appendices", "D. Use first-person narrative"], a: "A",
+    exp: "Executive summary = short overview that stands alone — key findings, recommendations, no details." },
+  { q: "Effective reading of the novel involves critical analysis to infer that Mudiaga's clubfoot symbolizes:", o: ["A. Broader ecological and social injustices", "B. Personal failure only", "C. Wealth from oil", "D. Village prosperity"], a: "A",
+    exp: "Clubfoot represents harm from oil pollution/corruption — wider injustice in Niger Delta." },
+  { q: "Scanning the novel would quickly reveal:", o: ["A. Specific instances of corruption in chapters", "B. Phonetic details of names", "C. Full character backstories", "D. Punctuation styles"], a: "A",
+    exp: "Scanning = fast reading to find specific info (e.g. corruption mentions)." },
+  { q: "SQ3R strategy applied to the novel's pollution descriptions requires:", o: ["A. Surveying for themes, questioning implications, reading details, reciting key events, reviewing inferences", "B. Skimming tenses only", "C. Ignoring context", "D. Vocalizing every word"], a: "A",
+    exp: "SQ3R: Survey, Question, Read, Recite, Review — active reading method." },
+  { q: "Active to passive: \"Oil flaring caused Mudiaga's disability.\"", o: ["A. Mudiaga's disability was caused by oil flaring.", "B. Disability causes oil flaring for Mudiaga.", "C. Oil flaring is causing disability.", "D. Caused was Mudiaga's disability by flaring."], a: "A",
+    exp: "Object becomes subject, agent with 'by', tense preserved." },
+  { q: "Passive emphasis in novel summary: \"The environment has been degraded by corruption\" focuses on:", o: ["A. The degraded environment over the agent", "B. Corrupt individuals", "C. Future fixes", "D. Active protests"], a: "A",
+    exp: "Passive shifts focus to the receiver (environment) rather than doer (corruption)." },
+  { q: "Identify passive: \"Villagers were burdened by exploitation.\"", o: ["A. Correct passive past simple", "B. Active present", "C. Passive future", "D. Incorrect form"], a: "A",
+    exp: "Were + past participle = passive voice, past simple tense." },
+  { q: "Direct to indirect: Mudiaga said, \"I will overcome prejudice.\"", o: ["A. Mudiaga said that he would overcome prejudice.", "B. Mudiaga says he will overcome.", "C. Mudiaga said he overcomes prejudice.", "D. Prejudice would be overcome, said Mudiaga."], a: "A",
+    exp: "Will → would, I → he, no backshift needed for reporting verb in past." },
+  { q: "Indirect with command: \"Fight corruption,\" the elder urged.", o: ["A. The elder urged them to fight corruption.", "B. The elder urges fighting corruption.", "C. Corruption fight was urged.", "D. Urged the elder to fight."], a: "A",
+    exp: "Commands in indirect: reporting verb + to-infinitive." },
+  { q: "Error in indirect: She exclaimed, \"What travails!\" → She exclaimed what travails. Corrected:", o: ["A. She exclaimed what travails those were.", "B. She exclaims what travails.", "C. What travails she exclaimed.", "D. No change"], a: "A",
+    exp: "Exclamations in indirect need restructuring with 'that' or rephrasing." },
+  { q: "Tense: \"Mudiaga has been struggling since birth due to pollution.\"", o: ["A. Present perfect continuous", "B. Simple past", "C. Future perfect", "D. Past continuous"], a: "A",
+    exp: "Has been + -ing = present perfect continuous (action started in past, continues now)." },
+  { q: "Correct tense for ongoing theme: \"Corruption _____ (destroy) the Delta for years.\"", o: ["A. Has been destroying", "B. Destroyed", "C. Will destroy", "D. Had destroyed"], a: "A",
+    exp: "Present perfect continuous for action starting in past and still relevant/effect ongoing." },
+  { q: "Novel's narrative tense predominantly uses past simple to:", o: ["A. Reflect on past events like Mudiaga's birth", "B. Predict future resilience", "C. Describe current pollution", "D. Condition hypothetical outcomes"], a: "A",
+    exp: "Stories/novels typically use past simple for events in the narrative timeline." },
+  { q: "Future perfect in context: \"By adulthood, Mudiaga _____ all prejudices.\"", o: ["A. Will have overcome", "B. Overcomes", "C. Had overcome", "D. Is overcoming"], a: "A",
+    exp: "Future perfect = will have + past participle (action completed before future point)." },
+  { q: "In phonetics, /k/ in \"clubfoot\" (Mudiaga's condition) is:", o: ["A. Voiceless velar plosive", "B. Voiced labial stop", "C. Fricative alveolar", "D. Nasal bilabial"], a: "A",
+    exp: "/k/ = back of tongue + soft palate (velar), sudden release (plosive), no vocal cord vibration (voiceless)." },
+  { q: "Punctuation in complex sentence: \"Though disabled Mudiaga excelled; education was his anchor.\"", o: ["A. Comma after \"disabled\"", "B. Semicolon to dash", "C. Colon after \"excelled\"", "D. No change"], a: "A",
+    exp: "Subordinate clause at start → comma after: \"Though disabled, Mudiaga excelled...\"" },
+  { q: "Memo on novel lessons would include \"cc\" for:", o: ["A. Copying relevant parties like community leaders", "B. Closing signature", "C. Subject only", "D. Attachments"], a: "A",
+    exp: "cc = carbon copy → send copies to others who need to know." },
+  { q: "Report recommendations on exploitation use:", o: ["A. Imperative tense, e.g., \"Implement reforms\"", "B. Descriptive past", "C. Narrative present", "D. Question form"], a: "A",
+    exp: "Recommendations are direct suggestions → imperative mood (do this, improve that)." },
+  { q: "Effective reading inference: The novel implies education counters:", o: ["A. Disability and corruption", "B. Oil wealth", "C. Village isolation", "D. Physical strength"], a: "A",
+    exp: "Mudiaga uses education to overcome disability stigma and fight corruption → education as empowerment tool." },
+  { q: "Passive in reports: \"Reforms must be enacted\" is preferred for:", o: ["A. Objectivity and focus on action", "B. Personal blame", "C. Shortness", "D. Drama"], a: "A",
+    exp: "Passive in formal reports avoids naming agent → sounds objective and action-focused." },
+  { q: "Indirect with time adverb: \"We protest tomorrow,\" villagers said.", o: ["A. Villagers said they would protest the next day.", "B. Villagers say protest tomorrow.", "C. Protested tomorrow, said villagers.", "D. They protest said villagers."], a: "A",
+    exp: "Tomorrow → the next day in reported speech (backshift + time shift)." },
+  { q: "Tense mix in summary: \"Mudiaga was born disabled but has since inspired change.\"", o: ["A. Past simple and present perfect", "B. All future", "C. Continuous only", "D. Perfect continuous"], a: "A",
+    exp: "Was born = past simple (completed event); has inspired = present perfect (past action with present relevance)." }
 ];
 
 let currentQuestion = 0;
@@ -201,7 +202,7 @@ const submitBtn   = document.getElementById("submit");
 const resultDiv   = document.getElementById("result");
 const reviewList  = document.getElementById("review-list");
 
-// ─── Render questions ──────────────────────────────────────────
+// Render questions
 questions.forEach((q, i) => {
   const div = document.createElement("div");
   div.className = "question";
@@ -263,7 +264,7 @@ function showResult() {
   reviewList.innerHTML = "";
 
   questions.forEach((q, i) => {
-    const userAns = answers[i];
+    const userAns = answers[i] || "Not answered";
     const correctLetter = q.a;
     const correctIdx = q.o.findIndex(o => o.startsWith(correctLetter));
     const correctText = q.o[correctIdx] || correctLetter;
@@ -277,12 +278,12 @@ function showResult() {
           const letter = String.fromCharCode(65 + idx);
           let className = "";
           if (letter === userAns) {
-            className = (userAns === correctLetter) ? 'user-correct' : 'user-wrong';
+            className = (userAns === correctLetter) ? "user-correct" : "user-wrong";
           }
           if (letter === correctLetter) {
-            className += ' correct-answer';
+            className += " correct-answer";
           }
-          return `<div class="${className}">${opt}</div>`;
+          return `<div class="${className.trim()}">${opt}</div>`;
         }).join("")}
       </div>
       <div class="correct-answer">Correct answer: ${correctText}</div>
@@ -292,16 +293,14 @@ function showResult() {
   });
 }
 
-// ─── Navigation & Submit ───────────────────────────────────────
+// Navigation & Submit
 prevBtn.onclick = () => {
   if (currentQuestion > 0) showQuestion(currentQuestion - 1);
 };
 
 nextBtn.onclick = () => {
   const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
-  if (selected) {
-    answers[currentQuestion] = selected.value;
-  }
+  if (selected) answers[currentQuestion] = selected.value;
 
   if (currentQuestion < questions.length - 1) {
     showQuestion(currentQuestion + 1);
@@ -311,12 +310,12 @@ nextBtn.onclick = () => {
 };
 
 submitBtn.onclick = () => {
-  if (confirm("Ready to finish and review all questions with explanations?")) {
+  if (confirm("Finish and review all 35 questions?")) {
     showResult();
   }
 };
 
-// ─── Init ──────────────────────────────────────────────────────
+// Init
 showQuestion(0);
 timerInterval = setInterval(updateTimer, 1000);
 </script>
