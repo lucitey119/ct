@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FUPRE PHY101 CBT Practice (SLT) – Full Explanations</title>
+  <title>FUPRE GST 100L CBT Practice (SLT) – No Auto-Save</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -95,9 +95,9 @@
 </head>
 <body>
 
-<h1>FUPRE PHY101 CBT Practice Test (SLT)</h1>
+<h1>FUPRE GST 100L CBT Practice (SLT – First Semester)</h1>
 <div class="info-box">
-  Total Questions: 50  |  Recommended Time: 60 minutes
+  Total Questions: 35  |  Recommended Time: 45–60 minutes
   <div id="timer">Time taken: 0:00</div>
 </div>
 
@@ -112,13 +112,13 @@
 <div id="result">
   <h2 style="text-align:center">Exam Finished!</h2>
   <p style="text-align:center; font-size:1.4rem;">
-    Score: <strong id="score" class="score-good"></strong> / 50<br>
+    Score: <strong id="score" class="score-good"></strong> / 35<br>
     Percentage: <strong id="percentage"></strong>%<br>
     Time Taken: <strong id="time-taken"></strong> minutes
   </p>
 
   <div id="mistakes">
-    <h3 style="text-align:center; margin:40px 0 20px;">Review: All Questions + Explanations</h3>
+    <h3 style="text-align:center; margin:40px 0 20px;">Review: Questions You Got Wrong + Easy Explanations</h3>
     <div id="missed-list"></div>
   </div>
 
@@ -129,107 +129,78 @@
 
 <script>
 // ────────────────────────────────────────────────
+// 35 GST questions with correct answers & explanations
 const questions = [
-  { q: "Which of the following is a dimensionless quantity?", o: ["A) Power", "B) Velocity", "C) Strain", "D) Pressure"], a: "C",
-    exp: "Strain is change in length divided by original length. Both are lengths, so the units cancel out completely — no unit left (dimensionless). Power has watts, velocity has m/s, pressure has pascals — all have units." },
-  { q: "The dimension [M][L]^2[T]^-3 represents which physical quantity?", o: ["A) Work", "B) Power", "C) Force", "D) Energy"], a: "B",
-    exp: "Power is work done per second = energy/time. Work/energy has dimensions [M L² T⁻²], divided by time [T] gives [M L² T⁻³]. Force is [M L T⁻²], work/energy is [M L² T⁻²]." },
-  { q: "What is the SI unit of Viscosity?", o: ["A) N/m", "B) kg/ms", "C) kg/ms^2", "D) Pascal second"], a: "D",
-    exp: "Viscosity measures 'stickiness' of fluids (like honey vs water). The standard SI unit is Pascal-second (Pa·s), which is the same as kg/(m·s). N/m is surface tension, kg/m s² is not standard." },
-  { q: "The dimension of the gravitational constant (G) is?", o: ["A) [M]^-1[L]^3[T]^-2", "B) [M][L]^2[T]^-2", "C) [M]^-1[L]^2[T]^-1", "D) [M][L]^-1[T]^2"], a: "A",
-    exp: "From Newton's law: F = G m₁ m₂ / r² → rearrange: G = F r² / (m₁ m₂). Force [M L T⁻²], r² [L²], m₁ m₂ [M²] → G = [M L T⁻² L² / M²] = [M⁻¹ L³ T⁻²]." },
-  { q: "Two vectors are perpendicular to each other if their _____ is zero.", o: ["A) Dot product", "B) Cross product", "C) Sum", "D) Difference"], a: "A",
-    exp: "Dot product = |A| |B| cosθ. When vectors are at 90° (perpendicular), cos90° = 0, so dot product = 0. Cross product is maximum at 90°, sum or difference can be anything." },
-  { q: "Find the magnitude of vector A = 3i + 4j.", o: ["A) 7", "B) 12", "C) 5", "D) 25"], a: "C",
-    exp: "Magnitude = √(x² + y²) = √(3² + 4²) = √(9+16) = √25 = 5. It's like Pythagoras theorem for the triangle formed by the components. 3-4-5 is a common right triangle." },
-  { q: "Which of these is a scalar quantity?", o: ["A) Displacement", "B) Acceleration", "C) Electric Field", "D) Work"], a: "D",
-    exp: "Scalars have only size (magnitude), no direction. Work = force × distance (with cosθ), but result is just a number with direction ignored — scalar. Others have direction." },
-  { q: "The cross product of two parallel vectors is:", o: ["A) Zero", "B) Maximum", "C) 1", "D) Infinite"], a: "A",
-    exp: "Cross product = |A| |B| sinθ. Parallel vectors have θ = 0° or 180°, sin0° = sin180° = 0 → cross product = 0. (No area in parallelogram they form.)" },
-  { q: "The dimension of Impulse is the same as that of:", o: ["A) Force", "B) Energy", "C) Momentum", "D) Power"], a: "C",
-    exp: "Impulse = force × time = change in momentum. So dimensions same as momentum [M L T⁻¹]. Force [M L T⁻²], energy [M L² T⁻²], power [M L² T⁻³]." },
-  { q: "The prefix 'Pico' represents a multiple of:", o: ["A) 10^-9", "B) 10^-12", "C) 10^-15", "D) 10^-6"], a: "B",
-    exp: "Pico means 10⁻¹² (very tiny, like picosecond = 10⁻¹² s). Nano=10⁻⁹, micro=10⁻⁶, femto=10⁻¹⁵." },
-  { q: "At what angle is the range of a projectile maximum?", o: ["A) 90 deg", "B) 45 deg", "C) 30 deg", "D) 60 deg"], a: "B",
-    exp: "Range = (v² sin2θ)/g. sin2θ is biggest (value=1) when 2θ=90° → θ=45°. At 90° it's straight up (zero range), at 30°/60° sin is less than max." },
-  { q: "The slope of a velocity-time graph represents:", o: ["A) Velocity", "B) Displacement", "C) Acceleration", "D) Power"], a: "C",
-    exp: "Slope = rise/run = Δv / Δt = acceleration. Area under graph = displacement, height = velocity." },
-  { q: "A ball is dropped from a height of 20m. Time to hit the ground (g=10m/s²)?", o: ["A) 1s", "B) 2s", "C) 4s", "D) 10s"], a: "B",
-    exp: "s = ½ g t² (initial speed=0) → 20 = ½ × 10 × t² → 20 = 5 t² → t²=4 → t=2 s. Like free fall basics." },
-  { q: "A car starts from rest and accelerates at 2m/s² for 10s. Distance covered?", o: ["A) 20m", "B) 50m", "C) 100m", "D) 200m"], a: "C",
-    exp: "s = ut + ½ at², u=0 → s = ½ × 2 × 10² = 100 m. Or average speed (0+20)/2 =10 m/s ×10s=100m." },
-  { q: "The area under a velocity-time graph represents:", o: ["A) Acceleration", "B) Displacement", "C) Speed", "D) Force"], a: "B",
-    exp: "Area = average velocity × time = displacement (vector, but in 1D it's distance with sign). Slope is acceleration." },
-  { q: "A projectile is fired at 320m/s at 30 deg. Time to reach max height?", o: ["A) 32s", "B) 16s", "C) 8s", "D) 64s"], a: "B",
-    exp: "Vertical velocity = v sinθ = 320 × 0.5 = 160 m/s. At max height v_y=0, so t = v_y / g = 160 / 10 = 16 s. (g≈10)" },
-  { q: "The horizontal component of a projectile's velocity is:", o: ["A) Zero", "B) Constant", "C) Increasing", "D) Decreasing"], a: "B",
-    exp: "No horizontal force (ignore air), so horizontal velocity stays constant. Vertical changes due to gravity." },
-  { q: "Centripetal acceleration is directed towards the:", o: ["A) Tangent", "B) Center", "C) Outwards", "D) Upwards"], a: "B",
-    exp: "It pulls object toward center of circle to keep it curving — that's why string tension or gravity points inward." },
-  { q: "An object moving at constant speed in a circle has:", o: ["A) Zero acceleration", "B) Constant velocity", "C) Changing velocity", "D) No force"], a: "C",
-    exp: "Speed constant, but direction changes → velocity (vector) changes → acceleration exists (centripetal). Force needed too." },
-  { q: "The equation v² = u² + 2as is used for:", o: ["A) Uniform motion", "B) Uniform acceleration", "C) Circular motion", "D) Projectile only"], a: "B",
-    exp: "It's one of kinematics equations for constant (uniform) acceleration. Works for straight line or vertical projectile part." },
-  { q: "Newton's First Law is also known as the Law of:", o: ["A) Momentum", "B) Inertia", "C) Gravity", "D) Force"], a: "B",
-    exp: "Object at rest stays at rest, moving stays moving at constant speed — unless net force acts. This property is called inertia." },
-  { q: "A force of 100N acts on a 5kg mass. What is the acceleration?", o: ["A) 5m/s²", "B) 10m/s²", "C) 20m/s²", "D) 500m/s²"], a: "C",
-    exp: "F = m a → a = F/m = 100 / 5 = 20 m/s². Newton's second law: bigger force or smaller mass → bigger acceleration." },
-  { q: "Work done is zero when the angle between Force and Displacement is:", o: ["A) 0 deg", "B) 90 deg", "C) 180 deg", "D) 45 deg"], a: "B",
-    exp: "Work = F d cosθ. cos90° = 0 → work=0 (e.g. carrying bag horizontally — force up, motion forward)." },
-  { q: "A body of 2kg moves at 4m/s. Kinetic energy?", o: ["A) 8J", "B) 16J", "C) 32J", "D) 4J"], a: "B",
-    exp: "KE = ½ m v² = ½ × 2 × 16 = 16 J. Double speed → 4× energy, half mass → half energy." },
-  { q: "The rate of change of momentum is proportional to:", o: ["A) Work", "B) Velocity", "C) Force", "D) Impulse"], a: "C",
-    exp: "F = Δp / Δt → force = rate of change of momentum. That's Newton's second law in momentum form." },
-  { q: "Power is defined as:", o: ["A) F x d", "B) F x v", "C) m x v", "D) m x a"], a: "B",
-    exp: "Power = work/time = (F d)/t = F (d/t) = F v. Rate of doing work or transferring energy." },
-  { q: "In an inelastic collision, what is conserved?", o: ["A) Kinetic energy", "B) Momentum", "C) Velocity", "D) Both A and B"], a: "B",
-    exp: "Momentum always conserved if no external force. In inelastic, kinetic energy is lost (to heat/sound/deformation)." },
-  { q: "Friction that exists before an object starts moving is:", o: ["A) Kinetic", "B) Dynamic", "C) Static", "D) Rolling"], a: "C",
-    exp: "Static friction prevents motion from starting — up to maximum value. Kinetic acts after sliding begins." },
-  { q: "Work done by a centripetal force is:", o: ["A) Positive", "B) Negative", "C) Zero", "D) Infinite"], a: "C",
-    exp: "Centripetal force is always perpendicular to velocity (tangent) → angle 90° → cos90°=0 → work=0. Speed constant." },
-  { q: "Mechanical energy is the sum of:", o: ["A) KE + PE", "B) Heat + Work", "C) Force + Dist", "D) Mass + Vel"], a: "A",
-    exp: "Mechanical energy = kinetic + potential (gravitational/elastic). Conserved if no friction/non-conservative forces." },
-  { q: "Archimedes' Principle relates upthrust to:", o: ["A) Object mass", "B) Weight of fluid displaced", "C) Object density", "D) Fluid volume"], a: "B",
-    exp: "Upthrust (buoyant force) = weight of fluid displaced. Why ships float: displaced water weight = ship weight." },
-  { q: "The ratio of tensile stress to tensile strain is:", o: ["A) Bulk Modulus", "B) Young's Modulus", "C) Shear Modulus", "D) Poisson Ratio"], a: "B",
-    exp: "Young's modulus = stress/strain for stretching/pulling (length change). Bulk for volume, shear for twisting." },
-  { q: "Calculate stress on a wire of area 0.01m² under 100N force.", o: ["A) 100Pa", "B) 1000Pa", "C) 10000Pa", "D) 10Pa"], a: "C",
-    exp: "Stress = force / area = 100 / 0.01 = 10,000 Pa. Smaller area → bigger stress (same force hurts more)." },
-  { q: "Surface tension is caused by:", o: ["A) Adhesive forces", "B) Cohesive forces", "C) Gravity", "D) Friction"], a: "B",
-    exp: "Cohesive forces = attraction between same molecules (water-water). Makes surface act like stretched skin (drops spherical)." },
-  { q: "Hydraulic brakes work based on:", o: ["A) Pascal's Law", "B) Boyle's Law", "C) Hooke's Law", "D) Newton's Law"], a: "A",
-    exp: "Pascal: pressure applied to enclosed fluid transmitted equally everywhere. Small force on pedal → big force on brakes." },
-  { q: "Hooke's Law is valid only within the:", o: ["A) Plastic limit", "B) Yield point", "C) Elastic limit", "D) Breaking point"], a: "C",
-    exp: "Hooke's law: force proportional to extension (F=kx) — only in elastic region. Beyond elastic limit, permanent deformation." },
-  { q: "The reciprocal of Bulk Modulus is:", o: ["A) Elasticity", "B) Compressibility", "C) Viscosity", "D) Plasticity"], a: "B",
-    exp: "Bulk modulus = stress / volume strain (how hard to compress). Reciprocal = how easy to compress = compressibility." },
-  { q: "Viscosity of liquids ____ with temperature increase.", o: ["A) Increases", "B) Decreases", "C) Remains same", "D) Doubles"], a: "B",
-    exp: "Heat makes molecules move faster → less 'stickiness' → viscosity decreases (honey flows easier when warm)." },
-  { q: "Bernoulli's principle is based on the conservation of:", o: ["A) Momentum", "B) Mass", "C) Energy", "D) Charge"], a: "C",
-    exp: "Bernoulli: faster fluid → lower pressure. From energy conservation: total energy (pressure + kinetic + potential) constant along streamline." },
-  { q: "The SI unit of Pressure is:", o: ["A) Newton", "B) Pascal", "C) Joule", "D) Watt"], a: "B",
-    exp: "Pressure = force / area → N/m² = Pascal (Pa). Newton is force, joule energy, watt power." },
-  { q: "At what temperature do Celsius and Fahrenheit coincide?", o: ["A) 0 deg", "B) 32 deg", "C) -40 deg", "D) 100 deg"], a: "C",
-    exp: "Set °C = °F: C = (9/5)C + 32 → -4/5 C = 32 → C = -40°. Both scales read -40 at same point." },
-  { q: "Heat required to change solid to liquid at constant temp:", o: ["A) Specific heat", "B) Latent heat of fusion", "C) Heat capacity", "D) Latent heat of vaporization"], a: "B",
-    exp: "Latent heat of fusion = heat to melt ice without temperature rise (energy breaks bonds). Vaporization for liquid to gas." },
-  { q: "Mode of heat transfer that requires no medium:", o: ["A) Conduction", "B) Convection", "C) Radiation", "D) Evaporation"], a: "C",
-    exp: "Radiation = infrared waves (like sun heat to earth through space). Conduction needs solid contact, convection needs fluid." },
-  { q: "Boyle's Law relates:", o: ["A) P and T", "B) V and T", "C) P and V", "D) V and n"], a: "C",
-    exp: "Boyle: P V = constant (at fixed temp). Squeeze balloon → pressure up, volume down." },
-  { q: "The temperature 27 deg C in Kelvin is:", o: ["A) 300K", "B) 273K", "C) 310K", "D) 246K"], a: "A",
-    exp: "K = °C + 273 → 27 + 273 = 300 K. Absolute zero is 0 K = -273°C." },
-  { q: "The internal energy of an ideal gas depends only on:", o: ["A) Pressure", "B) Volume", "C) Temperature", "D) Mass"], a: "C",
-    exp: "For ideal gas, internal energy = function of temperature only (kinetic energy of molecules). Not on P or V directly." },
-  { q: "Specific heat capacity unit:", o: ["A) J/kg", "B) J/kg.K", "C) W/mK", "D) J/K"], a: "B",
-    exp: "Specific heat = heat needed to raise 1 kg by 1 K → J/(kg·K). J/kg is not enough (no temp change), W/mK is thermal conductivity." },
-  { q: "An adiabatic process is one in which:", o: ["A) P is constant", "B) T is constant", "C) No heat enters/leaves", "D) V is constant"], a: "C",
-    exp: "Adiabatic = no heat exchange (Q=0). Like quick pump compression — temp rises from work done." },
-  { q: "The first law of thermodynamics is a statement of:", o: ["A) Energy conservation", "B) Mass conservation", "C) Entropy", "D) Efficiency"], a: "A",
-    exp: "ΔU = Q - W → change in internal energy = heat added minus work done. Energy conserved overall." },
-  { q: "Linear expansion is a property of:", o: ["A) Gases", "B) Liquids", "C) Solids", "D) All phases"], a: "C",
-    exp: "Linear = length increase with heat. Solids have fixed shape/length that expands noticeably (rails, bridges). Gases/liquids expand in volume, not 'linear'." }
+  { q: "Which of the following is the best definition of communication?", o: ["A. The exchange of information between two or more persons.", "B. Talking loudly to an audience.", "C. Writing only formal letters.", "D. Sending data without feedback."], a: "A",
+    exp: "Communication is about sharing and exchanging information (ideas, feelings, facts) between people, usually with the goal of understanding. It includes feedback." },
+  { q: "Choose the sentence that is grammatically correct:", o: ["A. Each of the students are ready.", "B. Neither of the options were suitable.", "C. Everyone have finished their work.", "D. The committee has reached a decision."], a: "D",
+    exp: "When the subject is 'committee' (collective noun), we use singular verb 'has'. 'Each', 'neither', 'everyone' also take singular verbs → A, B, C are wrong." },
+  { q: "The word 'coherent' most nearly means:", o: ["A. Confusing", "B. Logical and consistent", "C. Short and vague", "D. Loud and clear"], a: "B",
+    exp: "Coherent writing or speech is clear, logical, and sticks together well — ideas connect properly (opposite of confusing or vague)." },
+  { q: "Which is an example of active listening?", o: ["A. Interrupting to give advice immediately.", "B. Nodding and summarizing what the speaker said.", "C. Thinking about your reply while the speaker talks.", "D. Checking your phone during the talk."], a: "B",
+    exp: "Active listening means fully focusing, showing interest (nodding), and giving feedback (summarizing) to show you understand — not interrupting or being distracted." },
+  { q: "On what date did Nigeria gain independence?", o: ["A. 1 October 1960", "B. 29 May 1960", "C. 12 December 1960", "D. 1 January 1960"], a: "A",
+    exp: "Nigeria became independent from British colonial rule on October 1, 1960. October 1 is celebrated as Independence Day." },
+  { q: "Which one is a core element of national unity?", o: ["A. Strict regional isolation", "B. Shared national symbols and values", "C. Different official languages for each state", "D. Separate currencies per region"], a: "B",
+    exp: "National unity comes from things everyone shares: flag, anthem, values like peace & patriotism, common history — not separation or division." },
+  { q: "Citizenship primarily involves which duty?", o: ["A. Avoiding all taxes", "B. Participating in civic life and obeying laws", "C. Moving abroad permanently", "D. Rejecting public education"], a: "B",
+    exp: "A good citizen obeys laws, pays taxes, votes, serves the community, and respects rights of others — active participation in society." },
+  { q: "The voting age in Nigeria is:", o: ["A. 16 years", "B. 18 years", "C. 21 years", "D. 25 years"], a: "B",
+    exp: "According to the Nigerian Constitution (as amended), citizens must be at least 18 years old to vote in elections." },
+  { q: "Which of the following is a fundamental human right commonly recognized?", o: ["A. Freedom from petty chores", "B. Freedom of expression", "C. Right to unlimited property for all", "D. Freedom to break the law"], a: "B",
+    exp: "Freedom of expression (speech, opinion, press) is a basic human right protected in Nigeria's Constitution and international law." },
+  { q: "Entrepreneurship is best described as:", o: ["A. Starting and managing a business to make value and profit.", "B. Working as a civil servant only.", "C. Selling inherited property.", "D. Avoiding risk at all costs."], a: "A",
+    exp: "Entrepreneurship means identifying opportunities, starting a business, taking calculated risks, creating value/products, and aiming for profit/growth." },
+  { q: "Which item is essential in a business plan?", o: ["A. Owner’s favorite food", "B. Market analysis and financial projections", "C. The color of the office carpet", "D. Weekend plans of staff"], a: "B",
+    exp: "A good business plan must include realistic market research (customers, competitors) and financial forecasts (costs, revenue, profit) to show viability." },
+  { q: "A common source of startup finance is:", o: ["A. Telepathy", "B. Bootstrapping (personal savings)", "C. Ignoring expenses", "D. Refusing to charge customers"], a: "B",
+    exp: "Bootstrapping = using your own savings or revenue from early sales to fund the business — very common for small startups." },
+  { q: "Environmental sanitation primarily aims to:", o: ["A. Increase noise levels in a neighborhood", "B. Prevent disease by managing waste and water", "C. Remove green spaces for more buildings", "D. Promote littering to create jobs"], a: "B",
+    exp: "Sanitation = proper waste collection, clean water, toilets → stops spread of diseases like cholera, typhoid." },
+  { q: "Which practice reduces water-borne diseases?", o: ["A. Drinking untreated water", "B. Proper boiling or treating of drinking water", "C. Dumping waste into rivers", "D. Sharing unclean cups"], a: "B",
+    exp: "Boiling or using filters/chemicals kills germs in water → prevents diseases like diarrhoea, cholera." },
+  { q: "Solid waste management best practice includes:", o: ["A. Open dumping in waterways", "B. Segregation, recycling, and safe disposal", "C. Burning all waste in public spaces daily", "D. Throwing waste directly into drainage"], a: "B",
+    exp: "Best practice: separate waste (organic, plastic, etc.), recycle what can be reused, dispose safely in landfills or incinerators — reduces pollution." },
+  { q: "Ethics in public life is most concerned with:", o: ["A. Personal enrichment regardless of method", "B. Principles of right and wrong guiding behaviour", "C. Ignoring laws that are inconvenient", "D. Keeping secrets to avoid transparency"], a: "B",
+    exp: "Public ethics = moral principles (honesty, fairness, accountability) that guide how officials and citizens behave in society." },
+  { q: "Which behaviour best demonstrates integrity?", o: ["A. Cutting corners to meet targets", "B. Returning a found wallet to its owner", "C. Lying to avoid responsibility", "D. Claiming credit for another’s work"], a: "B",
+    exp: "Integrity = doing the right thing even when no one is watching — honesty, keeping promises, returning lost items." },
+  { q: "Corruption is best described as:", o: ["A. Honest public service", "B. Misuse of public office for private gain", "C. Transparent procurement processes", "D. Following procurement rules strictly"], a: "B",
+    exp: "Corruption = abuse of entrusted power (bribes, embezzlement, nepotism) for personal benefit — harms society." },
+  { q: "What is phishing in the context of ICT?", o: ["A. Online angling for sport", "B. Fraudulent attempts to obtain sensitive information via email or messages", "C. A safe way to share passwords", "D. A method of backing up files"], a: "B",
+    exp: "Phishing = fake emails/texts pretending to be from banks/official sites to trick you into giving passwords, card details, etc." },
+  { q: "A strong password should ideally include:", o: ["A. Only your birthdate", "B. A mix of letters, numbers, and symbols and be of reasonable length", "C. The word 'password' for easy recall", "D. Your pet’s name only"], a: "B",
+    exp: "Strong password: long (12+ characters), uppercase + lowercase + numbers + symbols — hard to guess or crack." },
+  { q: "The main difference between internet and intranet is:", o: ["A. Internet is only for schools, intranet is global", "B. Internet is public and global; intranet is a private internal network", "C. Intranet requires no security", "D. Internet is faster than intranet always"], a: "B",
+    exp: "Internet = worldwide public network. Intranet = private network inside one organization (company, school) — only staff/students can access." },
+  { q: "Email etiquette requires:", o: ["A. Using all caps to show importance", "B. Clear subject lines, polite tone, and concise content", "C. Sending large attachments without warning", "D. Ignoring recipients’ names"], a: "B",
+    exp: "Good email manners: meaningful subject, greet properly, be polite & brief, use proper grammar, don't SHOUT (all caps)." },
+  { q: "Critical thinking most directly involves:", o: ["A. Accepting information without question", "B. Evaluating evidence and reasoning logically", "C. Memorizing facts only", "D. Relying on rumours"], a: "B",
+    exp: "Critical thinking = questioning, analyzing evidence, spotting bias, drawing logical conclusions — not just accepting everything." },
+  { q: "An example of a logical fallacy is:", o: ["A. Ad hominem (attacking the person instead of the argument)", "B. Using verified data to support claims", "C. Checking multiple sources", "D. Defining terms clearly"], a: "A",
+    exp: "Ad hominem = attacking the speaker's character instead of addressing their argument (e.g. 'You can't be right because you're young')." },
+  { q: "Deductive reasoning is best illustrated by:", o: ["A. Observing many specific cases to form a general rule", "B. Starting with a general rule and applying it to specific cases", "C. Guessing without evidence", "D. Randomly selecting options"], a: "B",
+    exp: "Deductive: general truth → specific conclusion (All men are mortal. Socrates is a man → Socrates is mortal)." },
+  { q: "Time management technique SMART stands for:", o: ["A. Silly, Moderate, Ambiguous, Random, Timeless", "B. Specific, Measurable, Achievable, Relevant, Time-bound", "C. Slow, Mild, Atypical, Robertson, Timely", "D. Simple, Mysterious, Abstract, Rare, Tardy"], a: "B",
+    exp: "SMART goals: Specific, Measurable, Achievable, Relevant, Time-bound — helps make goals clear and realistic." },
+  { q: "The Cornell method is a system for:", o: ["A. Cooking recipes", "B. Note-taking and organizing lecture notes", "C. A type of rock music", "D. Designing buildings"], a: "B",
+    exp: "Cornell note-taking: divide page into cues, notes, summary sections — helps review and understand lectures better." },
+  { q: "Plagiarism means:", o: ["A. Properly citing all sources", "B. Presenting someone else’s work or ideas as your own without attribution", "C. Quoting sources with quotation marks and citation", "D. Writing original content only"], a: "B",
+    exp: "Plagiarism = copying text, ideas, code, images without giving credit — serious academic offence." },
+  { q: "The number of UN Sustainable Development Goals (SDGs) is:", o: ["A. 8", "B. 12", "C. 17", "D. 25"], a: "C",
+    exp: "There are 17 SDGs adopted by UN in 2015 — to end poverty, protect planet, ensure peace & prosperity by 2030." },
+  { q: "Which of the following best describes sustainable development?", o: ["A. Development that meets present needs without compromising future generations’ ability to meet theirs", "B. Unlimited exploitation of natural resources for immediate profit", "C. Development only for the richest countries", "D. Ignoring environmental impact for growth"], a: "A",
+    exp: "Sustainable development = balance economic growth, social inclusion, environmental protection so future generations are not harmed." },
+  { q: "Globalization primarily leads to:", o: ["A. Complete isolation of countries", "B. Increased international interaction and exchange of goods, services, ideas, and culture", "C. Fixed borders that prevent trade", "D. Only negative outcomes with no benefits"], a: "B",
+    exp: "Globalization = growing connection between countries through trade, technology, culture, migration — more exchange & interdependence." },
+  { q: "A primary goal of health education in campus GST is to:", o: ["A. Promote risky behaviours among students", "B. Equip students with knowledge to make healthy lifestyle choices", "C. Encourage neglecting personal hygiene", "D. Discourage use of health services"], a: "B",
+    exp: "Health education teaches nutrition, hygiene, disease prevention, mental health — so students can live healthier lives." },
+  { q: "Which is an effective stress management technique?", o: ["A. Continuous worrying without breaks", "B. Regular physical exercise, adequate sleep, and time management", "C. Ignoring deadlines completely", "D. Excessive caffeine and sleep deprivation"], a: "B",
+    exp: "Exercise releases endorphins, good sleep restores body, time management reduces pressure — proven ways to handle stress." },
+  { q: "Drug abuse prevention programs on campus usually emphasize:", o: ["A. The benefits of unregulated substance use", "B. Awareness, counselling, and access to support services", "C. Encouraging peers to try new substances", "D. Hiding incidents to avoid discipline"], a: "B",
+    exp: "Prevention focuses on education about risks, counselling, peer support, and referral to help services — not promotion or secrecy." },
+  { q: "Which is a good study habit for university students?", o: ["A. Cramming the night before every exam only", "B. Regular revision, creating study schedules, and active practice", "C. Avoiding textbooks and relying solely on rumours", "D. Skipping lectures frequently to catch up later"], a: "B",
+    exp: "Spaced revision, timetables, active recall (testing yourself) → better long-term memory and understanding than cramming." }
 ];
 
 let currentQuestion = 0;
@@ -244,13 +215,13 @@ const submitBtn   = document.getElementById("submit");
 const resultDiv   = document.getElementById("result");
 const missedList  = document.getElementById("missed-list");
 
-// Render questions
+// ─── Render questions ──────────────────────────────────────────
 questions.forEach((q, i) => {
   const div = document.createElement("div");
   div.className = "question";
   div.id = `q${i}`;
   div.innerHTML = `
-    <h3>Question ${i+1} of 50</h3>
+    <h3>Question ${i+1} of 35</h3>
     <p>${q.q}</p>
     <div class="options">
       ${q.o.map((opt, idx) => `
@@ -300,53 +271,54 @@ function showResult() {
   resultDiv.style.display = "block";
 
   document.getElementById("score").textContent = score;
-  document.getElementById("percentage").textContent = ((score / 50) * 100).toFixed(1);
+  document.getElementById("percentage").textContent = ((score / 35) * 100).toFixed(1);
   document.getElementById("time-taken").textContent = timeTaken;
 
   missedList.innerHTML = "";
-  
+  let hasMistakes = false;
+
   questions.forEach((q, i) => {
     const userAns = answers[i];
-    const isCorrect = userAns === q.a;
-    
-    const correctIdx = q.o.findIndex(o => o.startsWith(q.a + ")"));
-    const correctText = q.o[correctIdx] || q.a;
+    if (userAns !== q.a) {
+      hasMistakes = true;
+      const correctIdx = q.o.findIndex(o => o.startsWith(q.a));
+      const correctText = q.o[correctIdx] || q.a;
 
-    const div = document.createElement("div");
-    div.className = "missed-q";
-    div.style.background = isCorrect ? "#e8f5e9" : "#fff8f8";
-    div.style.borderLeft = isCorrect ? "6px solid #2e7d32" : "6px solid #d32f2f";
-
-    div.innerHTML = `
-      <h4>Question ${i+1}: ${q.q}</h4>
-      <div class="options">
-        ${q.o.map((opt, idx) => {
-          const letter = String.fromCharCode(65 + idx);
-          let extra = "";
-          if (letter === userAns) {
-            extra = isCorrect 
-              ? 'style="color:#2e7d32; font-weight:bold;"' 
-              : 'class="user-ans-wrong"';
-          }
-          if (letter === q.a && !isCorrect) {
-            extra = 'style="color:#2e7d32; font-weight:bold;"';
-          }
-          return `<div ${extra}>${opt}</div>`;
-        }).join("")}
-      </div>
-      <div class="correct-ans-box">Correct → ${correctText}</div>
-      <div class="explanation"><strong>Easy explanation (for beginners):</strong><br>${q.exp}</div>
-    `;
-    missedList.appendChild(div);
+      const div = document.createElement("div");
+      div.className = "missed-q";
+      div.innerHTML = `
+        <h4>Question ${i+1}: ${q.q}</h4>
+        <div class="options">
+          ${q.o.map((opt, idx) => {
+            const letter = String.fromCharCode(65 + idx);
+            let extra = "";
+            if (letter === userAns && userAns !== q.a) extra = 'class="user-ans-wrong"';
+            if (letter === q.a) extra = 'style="color:#2e7d32; font-weight:bold;"';
+            return `<div ${extra}>${opt}</div>`;
+          }).join("")}
+        </div>
+        <div class="correct-ans-box">Correct → ${correctText}</div>
+        <div class="explanation"><strong>Easy explanation:</strong><br>${q.exp}</div>
+      `;
+      missedList.appendChild(div);
+    }
   });
+
+  if (!hasMistakes) {
+    missedList.innerHTML = '<p style="color:#2e7d32; font-size:1.4rem; text-align:center; padding:20px;">Perfect score! You nailed every question 🎉</p>';
+  }
 }
 
-// Events
-prevBtn.onclick = () => { if (currentQuestion > 0) showQuestion(currentQuestion - 1); };
+// ─── Navigation & Submit ───────────────────────────────────────
+prevBtn.onclick = () => {
+  if (currentQuestion > 0) showQuestion(currentQuestion - 1);
+};
 
 nextBtn.onclick = () => {
   const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
-  if (selected) answers[currentQuestion] = selected.value;
+  if (selected) {
+    answers[currentQuestion] = selected.value;
+  }
 
   if (currentQuestion < questions.length - 1) {
     showQuestion(currentQuestion + 1);
@@ -356,15 +328,14 @@ nextBtn.onclick = () => {
 };
 
 submitBtn.onclick = () => {
-  if (confirm("Ready to finish and see explanations for all questions?")) {
+  if (confirm("Ready to finish and see explanations for any wrong answers?")) {
     showResult();
   }
 };
 
-// Start quiz
+// ─── Init ──────────────────────────────────────────────────────
 showQuestion(0);
 timerInterval = setInterval(updateTimer, 1000);
-
 </script>
 </body>
 </html>
