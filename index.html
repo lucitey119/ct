@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FUPRE GST 100L CBT Practice (SLT) – No Auto-Save</title>
+  <title>FUPRE GST 100L CBT Practice (SLT) – Full Review</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -64,32 +64,19 @@
       display: none;
     }
     .score-good  { color: #2e7d32; font-size: 1.8rem; }
-    #mistakes { margin-top: 40px; }
-    .missed-q {
-      background: #fff8f8;
-      border-left: 6px solid #d32f2f;
+    #all-review { margin-top: 40px; }
+    .review-q {
+      background: #f8f9fa;
+      border-left: 6px solid #1976d2;
       padding: 20px;
       margin: 30px 0;
       border-radius: 8px;
     }
-    .missed-q h4 { margin: 0 0 12px; color: #b71c1c; }
-    .user-ans-wrong { text-decoration: line-through; color: #c62828; font-weight: bold; }
-    .correct-ans-box {
-      background: #e8f5e9;
-      padding: 16px;
-      border-radius: 8px;
-      margin: 16px 0;
-      border-left: 5px solid #2e7d32;
-      font-weight: bold;
-    }
-    .explanation {
-      background: #f5faff;
-      padding: 16px;
-      border-radius: 8px;
-      margin-top: 16px;
-      border-left: 5px solid #1976d2;
-      font-size: 1.05rem;
-    }
+    .review-q h4 { margin: 0 0 12px; color: #1a3c6d; }
+    .user-correct   { color: #2e7d32; font-weight: bold; }
+    .user-wrong     { color: #c62828; text-decoration: line-through; font-weight: bold; }
+    .correct-answer { background: #e8f5e9; padding: 12px; border-radius: 6px; margin: 12px 0; font-weight: bold; color: #2e7d32; }
+    .explanation    { background: #f5faff; padding: 16px; border-radius: 8px; margin-top: 16px; border-left: 5px solid #1976d2; }
     #timer { font-size: 1.3rem; color: #d81b60; font-weight: bold; }
   </style>
 </head>
@@ -106,7 +93,7 @@
 <div id="nav-buttons">
   <button id="prev">Previous</button>
   <button id="next">Next</button>
-  <button id="submit" style="background:#d32f2f;">Finish & See Explanations</button>
+  <button id="submit" style="background:#d32f2f;">Finish & Review All Questions</button>
 </div>
 
 <div id="result">
@@ -117,9 +104,9 @@
     Time Taken: <strong id="time-taken"></strong> minutes
   </p>
 
-  <div id="mistakes">
-    <h3 style="text-align:center; margin:40px 0 20px;">Review: Questions You Got Wrong + Easy Explanations</h3>
-    <div id="missed-list"></div>
+  <div id="all-review">
+    <h3 style="text-align:center; margin:40px 0 20px;">Full Review: All Questions with Your Answers & Explanations</h3>
+    <div id="review-list"></div>
   </div>
 
   <div style="text-align:center; margin:50px 0;">
@@ -128,7 +115,6 @@
 </div>
 
 <script>
-// ────────────────────────────────────────────────
 // 35 GST questions with correct answers & explanations
 const questions = [
   { q: "Which of the following is the best definition of communication?", o: ["A. The exchange of information between two or more persons.", "B. Talking loudly to an audience.", "C. Writing only formal letters.", "D. Sending data without feedback."], a: "A",
@@ -213,7 +199,7 @@ const prevBtn     = document.getElementById("prev");
 const nextBtn     = document.getElementById("next");
 const submitBtn   = document.getElementById("submit");
 const resultDiv   = document.getElementById("result");
-const missedList  = document.getElementById("missed-list");
+const reviewList  = document.getElementById("review-list");
 
 // ─── Render questions ──────────────────────────────────────────
 questions.forEach((q, i) => {
@@ -274,39 +260,36 @@ function showResult() {
   document.getElementById("percentage").textContent = ((score / 35) * 100).toFixed(1);
   document.getElementById("time-taken").textContent = timeTaken;
 
-  missedList.innerHTML = "";
-  let hasMistakes = false;
+  reviewList.innerHTML = "";
 
   questions.forEach((q, i) => {
     const userAns = answers[i];
-    if (userAns !== q.a) {
-      hasMistakes = true;
-      const correctIdx = q.o.findIndex(o => o.startsWith(q.a));
-      const correctText = q.o[correctIdx] || q.a;
+    const correctLetter = q.a;
+    const correctIdx = q.o.findIndex(o => o.startsWith(correctLetter));
+    const correctText = q.o[correctIdx] || correctLetter;
 
-      const div = document.createElement("div");
-      div.className = "missed-q";
-      div.innerHTML = `
-        <h4>Question ${i+1}: ${q.q}</h4>
-        <div class="options">
-          ${q.o.map((opt, idx) => {
-            const letter = String.fromCharCode(65 + idx);
-            let extra = "";
-            if (letter === userAns && userAns !== q.a) extra = 'class="user-ans-wrong"';
-            if (letter === q.a) extra = 'style="color:#2e7d32; font-weight:bold;"';
-            return `<div ${extra}>${opt}</div>`;
-          }).join("")}
-        </div>
-        <div class="correct-ans-box">Correct → ${correctText}</div>
-        <div class="explanation"><strong>Easy explanation:</strong><br>${q.exp}</div>
-      `;
-      missedList.appendChild(div);
-    }
+    const div = document.createElement("div");
+    div.className = "review-q";
+    div.innerHTML = `
+      <h4>Question ${i+1}: ${q.q}</h4>
+      <div class="options">
+        ${q.o.map((opt, idx) => {
+          const letter = String.fromCharCode(65 + idx);
+          let className = "";
+          if (letter === userAns) {
+            className = (userAns === correctLetter) ? 'user-correct' : 'user-wrong';
+          }
+          if (letter === correctLetter) {
+            className += ' correct-answer';
+          }
+          return `<div class="${className}">${opt}</div>`;
+        }).join("")}
+      </div>
+      <div class="correct-answer">Correct answer: ${correctText}</div>
+      <div class="explanation"><strong>Explanation:</strong><br>${q.exp}</div>
+    `;
+    reviewList.appendChild(div);
   });
-
-  if (!hasMistakes) {
-    missedList.innerHTML = '<p style="color:#2e7d32; font-size:1.4rem; text-align:center; padding:20px;">Perfect score! You nailed every question 🎉</p>';
-  }
 }
 
 // ─── Navigation & Submit ───────────────────────────────────────
@@ -328,7 +311,7 @@ nextBtn.onclick = () => {
 };
 
 submitBtn.onclick = () => {
-  if (confirm("Ready to finish and see explanations for any wrong answers?")) {
+  if (confirm("Ready to finish and review all questions with explanations?")) {
     showResult();
   }
 };
