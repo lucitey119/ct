@@ -66,16 +66,16 @@
     .score-good { color: #2e7d32; font-size: 1.8rem; }
     #full-review { margin-top: 40px; }
     .review-q {
-      background: #fff;
+      background: #f8f9fa;
       border-left: 6px solid #1976d2;
       padding: 20px;
       margin: 30px 0;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
-    .opt-review { padding: 8px; margin: 4px 0; border-radius: 4px; border: 1px solid #eee; }
-    .correct-opt { background: #e8f5e9; border-color: #2e7d32; color: #1b5e20; font-weight: bold; }
-    .wrong-opt { background: #ffebee; border-color: #c62828; color: #b71c1c; text-decoration: line-through; }
+    .user-correct { color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 4px 8px; border-radius: 4px; }
+    .user-wrong { color: #c62828; text-decoration: line-through; font-weight: bold; background: #ffebee; padding: 4px 8px; border-radius: 4px; }
+    .correct-answer-hl { background: #e8f5e9; padding: 12px; border-radius: 6px; margin: 12px 0; font-weight: bold; color: #2e7d32; }
+    .explanation { background: #f5faff; padding: 16px; border-radius: 8px; margin-top: 16px; border-left: 5px solid #1976d2; }
     #timer { font-size: 1.3rem; color: #d81b60; font-weight: bold; }
   </style>
 </head>
@@ -83,7 +83,7 @@
 
 <h1>FUPRE Mathematics CBT Practice</h1>
 <div class="info-box">
-  All 7 Topics Included | 35 Questions
+  Topics: Sets, Induction, AP/GP, Partial Fractions, Complex Numbers, Trig, Binomial Theorem
   <div id="timer">Time taken: 0:00</div>
 </div>
 
@@ -92,117 +92,75 @@
 <div id="nav-buttons">
   <button id="prev">Previous</button>
   <button id="next">Next</button>
-  <button id="submit" style="background:#d32f2f;">Finish Exam</button>
+  <button id="submit" style="background:#d32f2f;">Finish & Review</button>
 </div>
 
 <div id="result">
-  <h2 style="text-align:center">Exam Results</h2>
+  <h2 style="text-align:center">Practice Complete!</h2>
   <p style="text-align:center; font-size:1.4rem;">
     Score: <strong id="score" class="score-good"></strong> / 35<br>
-    Percentage: <strong id="percentage"></strong>%
+    Percentage: <strong id="percentage"></strong>%<br>
+    Time: <strong id="time-taken"></strong> minutes
   </p>
-  <hr>
-  <h3 style="text-align:center">Detailed Review</h3>
   <div id="review-list"></div>
-  <div style="text-align:center;"><button onclick="location.reload()">Restart Practice</button></div>
 </div>
 
 <script>
 const questions = [
-  { q: "If U = {1,2,3,4,5,6} and A = {2,4,6}, the complement of A is", o: ["A. {1,3,5}", "B. {2,4,6}", "C. {1,2,3}", "D. {4,5,6}"], a: "A" },
-  { q: "If A = {1,2,3} and B = {3,4,5}, then A ∩ B is", o: ["A. {3}", "B. {1,2,3,4,5}", "C. {1,2}", "D. {4,5}"], a: "A" },
-  { q: "If n(A)=10, n(B)=8 and n(A ∩ B)=3, find n(A ∪ B).", o: ["A. 15", "B. 18", "C. 21", "D. 13"], a: "A" },
-  { q: "Which of the following represents the empty set?", o: ["A. {0}", "B. { }", "C. {1}", "D. {∞}"], a: "B" },
-  { q: "If A ⊂ B, then", o: ["A. Every element of B is in A", "B. Every element of A is in B", "C. A and B are equal", "D. A has more elements than B"], a: "B" },
-  { q: "The first step in mathematical induction is", o: ["A. Assume true for n = k", "B. Prove true for n = 1", "C. Differentiate the equation", "D. Integrate the equation"], a: "B" },
-  { q: "If a statement is true for n=k and true for n=k+1, then it is true for", o: ["A. n=1 only", "B. all natural numbers", "C. even numbers only", "D. odd numbers only"], a: "B" },
-  { q: "The formula for the sum of first n natural numbers is", o: ["A. n(n+1)/2", "B. n(n-1)/2", "C. n^2", "D. 2n"], a: "A" },
-  { q: "The principle of mathematical induction is mainly used to", o: ["A. Solve quadratic equations", "B. Prove statements for integers", "C. Find limits", "D. Solve matrices"], a: "B" },
-  { q: "Mathematical induction works mainly for", o: ["A. real numbers", "B. natural numbers", "C. complex numbers", "D. fractions"], a: "B" },
-  { q: "In an Arithmetic Progression, the common difference is", o: ["A. product of terms", "B. difference between consecutive terms", "C. ratio of terms", "D. square of terms"], a: "B" },
-  { q: "Find the common difference of AP: 3, 7, 11, 15", o: ["A. 3", "B. 4", "C. 5", "D. 6"], a: "B" },
-  { q: "The 10th term of an AP with a=2, d=3 is", o: ["A. 29", "B. 30", "C. 32", "D. 35"], a: "A" },
-  { q: "The formula for nth term of AP is", o: ["A. a+(n-1)d", "B. a+nd", "C. ad^n", "D. a-dn"], a: "A" },
-  { q: "In GP the common ratio is", o: ["A. sum of terms", "B. difference of terms", "C. ratio between consecutive terms", "D. square of terms"], a: "C" },
-  { q: "Find the common ratio of GP: 2, 6, 18, 54", o: ["A. 2", "B. 3", "C. 4", "D. 6"], a: "B" },
-  { q: "The sum of first n terms of GP is", o: ["A. a(r^n-1)/(r-1)", "B. a+n", "C. an+r", "D. ar^n"], a: "A" },
-  { q: "Partial fractions are mainly used to simplify", o: ["A. algebraic fractions", "B. matrices", "C. vectors", "D. logarithms"], a: "A" },
-  { q: "5 / [x(x+1)] can be written as", o: ["A. A/x + B/(x+1)", "B. Ax + B(x+1)", "C. A/x^2 + B/x", "D. Ax + B"], a: "A" },
-  { q: "If 1 / [x(x+1)] = A/x + B/(x+1), then", o: ["A. A=1, B=-1", "B. A=-1, B=1", "C. A=1, B=1", "D. A=0, B=1"], a: "A" },
-  { q: "Partial fraction decomposition is mostly applied when the denominator is", o: ["A. factorized", "B. squared", "C. cubed", "D. negative"], a: "A" },
-  { q: "The denominator (x^2-1) factorizes as", o: ["A. (x+1)(x+1)", "B. (x−1)(x+1)", "C. (x−1)(x−1)", "D. (x+2)(x−2)"], a: "B" },
-  { q: "A complex number is written in the form", o: ["A. a + b", "B. a + bi", "C. a − b", "D. ab"], a: "B" },
-  { q: "i^2 =", o: ["A. 1", "B. −1", "C. 0", "D. 2"], a: "B" },
-  { q: "The conjugate of (3 + 4i) is", o: ["A. 3 − 4i", "B. −3 + 4i", "C. −3 − 4i", "D. 4 + 3i"], a: "A" },
-  { q: "The modulus of (a+bi) is", o: ["A. a^2+b^2", "B. √(a^2+b^2)", "C. a+b", "D. a-b"], a: "B" },
-  { q: "i^4 =", o: ["A. −1", "B. 1", "C. i", "D. −i"], a: "B" },
-  { q: "The value of sin 90° is", o: ["A. 0", "B. 1", "C. −1", "D. 1/2"], a: "B" },
-  { q: "cos 0° =", o: ["A. 0", "B. 1", "C. −1", "D. 1/2"], a: "B" },
-  { q: "tan 45° =", o: ["A. 0", "B. 1", "C. √3", "D. 1/2"], a: "B" },
-  { q: "The identity sin^2θ + cos^2θ =", o: ["A. 0", "B. 1", "C. 2", "D. −1"], a: "B" },
-  { q: "The reciprocal of sin θ is", o: ["A. secθ", "B. cosecθ", "C. cotθ", "D. tanθ"], a: "B" },
-  { q: "The binomial theorem is used to expand", o: ["A. (a + b)^n", "B. (a − b)", "C. (a × b)", "D. (a / b)"], a: "A" },
-  { q: "The number of terms in (a+b)^n is", o: ["A. n", "B. n−1", "C. n+1", "D. 2n"], a: "C" },
-  { q: "The general term in binomial expansion is", o: ["A. nCr a^(n-r) b^r", "B. a^n+b^n", "C. n(a+b)", "D. ab^n"], a: "A" }
+  // Elementary Sets
+  { q: "If U = {1,2,3,4,5,6} and A = {2,4,6}, the complement of A is", o: ["A. {1,3,5}", "B. {2,4,6}", "C. {1,2,3}", "D. {4,5,6}"], a: "A", exp: "The complement A' contains all elements in U that are NOT in A. U - {2,4,6} = {1,3,5}." },
+  { q: "If A = {1,2,3} and B = {3,4,5}, then A ∩ B is", o: ["A. {3}", "B. {1,2,3,4,5}", "C. {1,2}", "D. {4,5}"], a: "A", exp: "Intersection (∩) means elements common to both sets. Only {3} is in both A and B." },
+  { q: "If n(A)=10, n(B)=8 and n(A ∩ B)=3, find n(A ∪ B).", o: ["A. 15", "B. 18", "C. 21", "D. 13"], a: "A", exp: "Using the formula: n(A ∪ B) = n(A) + n(B) - n(A ∩ B) → 10 + 8 - 3 = 15." },
+  { q: "Which of the following represents the empty set?", o: ["A. {0}", "B. { }", "C. {1}", "D. {∞}"], a: "B", exp: "An empty set contains no elements. {0} is not empty because it contains the number zero." },
+  { q: "If A ⊂ B, then", o: ["A. Every element of B is in A", "B. Every element of A is in B", "C. A and B are equal", "D. A has more elements than B"], a: "B", exp: "The symbol ⊂ means 'is a subset of', meaning all elements of the first set are contained in the second." },
+  
+  // Mathematical Induction
+  { q: "The first step in mathematical induction is", o: ["A. Assume true for n = k", "B. Prove true for n = 1", "C. Differentiate the equation", "D. Integrate the equation"], a: "B", exp: "This is the 'Basis Step' where you verify the statement for the smallest value (usually n=1)." },
+  { q: "If a statement is true for n=k and true for n=k+1, then it is true for", o: ["A. n=1 only", "B. all natural numbers", "C. even numbers only", "D. odd numbers only"], a: "B", exp: "The principle of induction acts like falling dominoes; if one falls and hits the next, they all fall." },
+  { q: "The formula for the sum of first n natural numbers is", o: ["A. n(n+1)/2", "B. n(n-1)/2", "C. n^2", "D. 2n"], a: "A", exp: "This is a standard identity proven by induction: 1+2+3...+n = n(n+1)/2." },
+  { q: "The principle of mathematical induction is mainly used to", o: ["A. Solve quadratic equations", "B. Prove statements for integers", "C. Find limits", "D. Solve matrices"], a: "B", exp: "Induction is a proof technique used for discrete sets, typically positive integers/natural numbers." },
+  { q: "Mathematical induction works mainly for", o: ["A. real numbers", "B. natural numbers", "C. complex numbers", "D. fractions"], a: "B", exp: "Natural numbers {1, 2, 3...} provide the discrete steps required for the inductive process." },
+  
+  // Sequence and Series
+  { q: "In an Arithmetic Progression, the common difference is", o: ["A. product of terms", "B. difference between consecutive terms", "C. ratio of terms", "D. square of terms"], a: "B", exp: "The common difference 'd' is found by subtracting a term from the one following it." },
+  { q: "Find the common difference of AP: 3, 7, 11, 15", o: ["A. 3", "B. 4", "C. 5", "D. 6"], a: "B", exp: "7 - 3 = 4, 11 - 7 = 4. The difference is 4." },
+  { q: "The 10th term of an AP with a=2, d=3 is", o: ["A. 29", "B. 30", "C. 32", "D. 35"], a: "A", exp: "Tn = a + (n-1)d → 2 + (9 * 3) = 2 + 27 = 29." },
+  { q: "The formula for nth term of AP is", o: ["A. a+(n-1)d", "B. a+nd", "C. ad^n", "D. a-dn"], a: "A", exp: "This is the standard formula where 'a' is the first term and 'd' is the common difference." },
+  { q: "In GP the common ratio is", o: ["A. sum of terms", "B. difference of terms", "C. ratio between consecutive terms", "D. square of terms"], a: "C", exp: "Common ratio 'r' is found by dividing a term by the term immediately before it." },
+  { q: "Find the common ratio of GP: 2, 6, 18, 54", o: ["A. 2", "B. 3", "C. 4", "D. 6"], a: "B", exp: "6 / 2 = 3. 18 / 6 = 3. The ratio is 3." },
+  { q: "The sum of first n terms of GP is", o: ["A. a(r^n-1)/(r-1)", "B. a+n", "C. an+r", "D. ar^n"], a: "A", exp: "This formula is used when the common ratio r > 1." },
+  
+  // Partial Fractions
+  { q: "Partial fractions are mainly used to simplify", o: ["A. algebraic fractions", "B. matrices", "C. vectors", "D. logarithms"], a: "A", exp: "It breaks down complex rational expressions into simpler, smaller fractions." },
+  { q: "5 / [x(x+1)] can be written as", o: ["A. A/x + B/(x+1)", "B. Ax + B(x+1)", "C. A/x^2 + B/x", "D. Ax + B"], a: "A", exp: "For distinct linear factors in the denominator, each gets a constant numerator (A, B, etc.)." },
+  { q: "If 1 / [x(x+1)] = A/x + B/(x+1), then", o: ["A. A=1, B=-1", "B. A=-1, B=1", "C. A=1, B=1", "D. A=0, B=1"], a: "A", exp: "Using cover-up: for A, x=0 → 1/(0+1)=1. For B, x=-1 → 1/(-1)=-1." },
+  { q: "Partial fraction decomposition is mostly applied when the denominator is", o: ["A. factorized", "B. squared", "C. cubed", "D. negative"], a: "A", exp: "The denominator must be factorable into linear or quadratic components to apply the method." },
+  { q: "The denominator (x^2-1) factorizes as", o: ["A. (x+1)(x+1)", "B. (x−1)(x+1)", "C. (x−1)(x−1)", "D. (x+2)(x−2)"], a: "B", exp: "This is a difference of two squares: a² - b² = (a-b)(a+b)." },
+  
+  // Complex Numbers
+  { q: "A complex number is written in the form", o: ["A. a + b", "B. a + bi", "C. a − b", "D. ab"], a: "B", exp: "A complex number has a real part (a) and an imaginary part (bi)." },
+  { q: "i^2 =", o: ["A. 1", "B. −1", "C. 0", "D. 2"], a: "B", exp: "By definition, the imaginary unit i = √-1, so its square is -1." },
+  { q: "The conjugate of (3 + 4i) is", o: ["A. 3 − 4i", "B. −3 + 4i", "C. −3 − 4i", "D. 4 + 3i"], a: "A", exp: "To find the conjugate, change the sign of the imaginary part only." },
+  { q: "The modulus of (a+bi) is", o: ["A. a^2+b^2", "B. √(a^2+b^2)", "C. a+b", "D. a-b"], a: "B", exp: "The modulus represents distance from the origin on an Argand diagram, calculated via Pythagoras." },
+  { q: "i^4 =", o: ["A. −1", "B. 1", "C. i", "D. −i"], a: "B", exp: "i^4 = (i^2) * (i^2) = (-1) * (-1) = 1." },
+  
+  // Trigonometry
+  { q: "The value of sin 90° is", o: ["A. 0", "B. 1", "C. −1", "D. 1/2"], a: "B", exp: "At 90 degrees on the unit circle, the y-coordinate is 1." },
+  { q: "cos 0° =", o: ["A. 0", "B. 1", "C. −1", "D. 1/2"], a: "B", exp: "At 0 degrees on the unit circle, the x-coordinate is 1." },
+  { q: "tan 45° =", o: ["A. 0", "B. 1", "C. √3", "D. 1/2"], a: "B", exp: "Tan(45) = sin(45)/cos(45). Since both are √2/2, the ratio is 1." },
+  { q: "The identity sin^2θ + cos^2θ =", o: ["A. 0", "B. 1", "C. 2", "D. −1"], a: "B", exp: "This is the fundamental Pythagorean trigonometric identity." },
+  { q: "The reciprocal of sin θ is", o: ["A. secθ", "B. cosecθ", "C. cotθ", "D. tanθ"], a: "B", exp: "Cosecant (cosec) is defined as 1/sine." },
+  
+  // Binomial Theorem
+  { q: "The binomial theorem is used to expand", o: ["A. (a + b)^n", "B. (a − b)", "C. (a × b)", "D. (a / b)"], a: "A", exp: "It provides a formula for expanding powers of a binomial (two-term expression)." },
+  { q: "The number of terms in (a+b)^n is", o: ["A. n", "B. n−1", "C. n+1", "D. 2n"], a: "C", exp: "Because the expansion starts at the 0th power of 'b' and ends at 'n', there are n+1 terms." },
+  { q: "The general term in binomial expansion is", o: ["A. nCr a^(n-r) b^r", "B. a^n+b^n", "C. n(a+b)", "D. ab^n"], a: "A", exp: "This formula allows you to find any specific term in the expansion without writing the whole thing." }
 ];
 
 let currentQuestion = 0;
-let userAnswers = new Array(questions.length).fill(null);
+let answers = new Array(questions.length).fill(null);
 let startTime = Date.now();
-
-function renderQuiz() {
-  questions.forEach((q, i) => {
-    const div = document.createElement("div");
-    div.className = "question";
-    div.id = `q${i}`;
-    div.innerHTML = `<h3>Question ${i+1}</h3><p>${q.q}</p><div class='options'>` + 
-      q.o.map((opt, idx) => `<label><input type="radio" name="opt${i}" value="${opt.charAt(0)}"> ${opt}</label>`).join("") + 
-      `</div>`;
-    quizDiv.appendChild(div);
-  });
-  showQuestion(0);
-}
-
-function showQuestion(n) {
-  document.querySelectorAll(".question").forEach(el => el.classList.remove("active"));
-  document.getElementById(`q${n}`).classList.add("active");
-  currentQuestion = n;
-  prevBtn.disabled = n === 0;
-  nextBtn.textContent = n === questions.length - 1 ? "Finish" : "Next";
-}
-
-nextBtn.onclick = () => {
-  const selected = document.querySelector(`input[name="opt${currentQuestion}"]:checked`);
-  if (selected) userAnswers[currentQuestion] = selected.value;
-  if (currentQuestion < questions.length - 1) showQuestion(currentQuestion + 1);
-  else endExam();
-};
-
-prevBtn.onclick = () => showQuestion(currentQuestion - 1);
-submitBtn.onclick = () => { if(confirm("Submit now?")) endExam(); };
-
-function endExam() {
-  clearInterval(timerInt);
-  let score = 0;
-  questions.forEach((q, i) => { if (userAnswers[i] === q.a) score++; });
-  quizDiv.style.display = "none";
-  document.getElementById("nav-buttons").style.display = "none";
-  resultDiv.style.display = "block";
-  document.getElementById("score").textContent = score;
-  document.getElementById("percentage").textContent = ((score/35)*100).toFixed(1);
-  
-  questions.forEach((q, i) => {
-    const div = document.createElement("div");
-    div.className = "review-q";
-    div.innerHTML = `<h4>Question ${i+1}: ${q.q}</h4>` + q.o.map(opt => {
-      let cls = "opt-review";
-      if (opt.charAt(0) === q.a) cls += " correct-opt";
-      if (userAnswers[i] === opt.charAt(0) && userAnswers[i] !== q.a) cls += " wrong-opt";
-      return `<div class="${cls}">${opt}</div>`;
-    }).join("");
-    reviewList.appendChild(div);
-  });
-}
+let timerInterval;
 
 const quizDiv = document.getElementById("quiz");
 const prevBtn = document.getElementById("prev");
@@ -210,12 +168,92 @@ const nextBtn = document.getElementById("next");
 const submitBtn = document.getElementById("submit");
 const resultDiv = document.getElementById("result");
 const reviewList = document.getElementById("review-list");
-const timerInt = setInterval(() => {
-  let diff = Math.floor((Date.now() - startTime)/1000);
-  document.getElementById("timer").textContent = `Time taken: ${Math.floor(diff/60)}:${(diff%60).toString().padStart(2,'0')}`;
-}, 1000);
 
-renderQuiz();
+questions.forEach((q, i) => {
+  const div = document.createElement("div");
+  div.className = "question";
+  div.id = `q${i}`;
+  div.innerHTML = `
+    <h3>Question ${i+1} of 35</h3>
+    <p style="font-weight:bold; font-size:1.1rem;">${q.q}</p>
+    <div class="options">
+      ${q.o.map((opt, idx) => `
+        <label>
+          <input type="radio" name="q${i}" value="${String.fromCharCode(65 + idx)}">
+          ${opt}
+        </label>
+      `).join("")}
+    </div>
+  `;
+  quizDiv.appendChild(div);
+});
+
+function showQuestion(n) {
+  document.querySelectorAll(".question").forEach(el => el.classList.remove("active"));
+  document.getElementById(`q${n}`).classList.add("active");
+  prevBtn.disabled = n === 0;
+  nextBtn.textContent = n === questions.length - 1 ? "Finish" : "Next";
+  currentQuestion = n;
+}
+
+function updateTimer() {
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const min = Math.floor(elapsed / 60);
+  const sec = elapsed % 60;
+  document.getElementById("timer").textContent = `Time taken: ${min}:${sec.toString().padStart(2,"0")}`;
+}
+
+function showResult() {
+  clearInterval(timerInterval);
+  let score = 0;
+  answers.forEach((ans, i) => { if (ans === questions[i].a) score++; });
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("nav-buttons").style.display = "none";
+  resultDiv.style.display = "block";
+
+  document.getElementById("score").textContent = score;
+  document.getElementById("percentage").textContent = ((score / 35) * 100).toFixed(1);
+  document.getElementById("time-taken").textContent = ((Date.now() - startTime) / 60000).toFixed(2);
+
+  questions.forEach((q, i) => {
+    const userAns = answers[i] || "Not answered";
+    const correctLetter = q.a;
+    
+    const div = document.createElement("div");
+    div.className = "review-q";
+    div.innerHTML = `
+      <h4>Question ${i+1}: ${q.q}</h4>
+      <div class="options">
+        ${q.o.map((opt, idx) => {
+          const letter = String.fromCharCode(65 + idx);
+          let className = "";
+          if (letter === userAns) {
+            className = (userAns === correctLetter) ? "user-correct" : "user-wrong";
+          }
+          if (letter === correctLetter) {
+            className += " correct-answer-hl";
+          }
+          return `<div class="${className.trim()}">${opt}</div>`;
+        }).join("")}
+      </div>
+      <div class="explanation"><strong>Explanation:</strong><br>${q.exp}</div>
+    `;
+    reviewList.appendChild(div);
+  });
+}
+
+prevBtn.onclick = () => showQuestion(currentQuestion - 1);
+nextBtn.onclick = () => {
+  const sel = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+  if (sel) answers[currentQuestion] = sel.value;
+  if (currentQuestion < questions.length - 1) showQuestion(currentQuestion + 1);
+  else showResult();
+};
+submitBtn.onclick = () => { if(confirm("End exam?")) showResult(); };
+
+showQuestion(0);
+timerInterval = setInterval(updateTimer, 1000);
 </script>
 </body>
 </html>
