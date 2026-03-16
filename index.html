@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FUPRE GST 100L CBT Practice – 35 Questions</title>
+  <title>FUPRE Mathematics CBT Practice – 35 Questions</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -11,7 +11,7 @@
       margin: 30px auto;
       padding: 0 20px;
       line-height: 1.6;
-      background: #f9f9f9;
+      background: #f4f7f6;
       color: #333;
     }
     h1, h2, h3 { color: #1a3c6d; text-align: center; }
@@ -72,19 +72,18 @@
       margin: 30px 0;
       border-radius: 8px;
     }
-    .review-q h4 { margin: 0 0 12px; color: #1a3c6d; }
-    .user-correct   { color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 4px 8px; border-radius: 4px; }
-    .user-wrong     { color: #c62828; text-decoration: line-through; font-weight: bold; background: #ffebee; padding: 4px 8px; border-radius: 4px; }
-    .correct-answer { background: #e8f5e9; padding: 12px; border-radius: 6px; margin: 12px 0; font-weight: bold; color: #2e7d32; }
-    .explanation    { background: #f5faff; padding: 16px; border-radius: 8px; margin-top: 16px; border-left: 5px solid #1976d2; }
+    .user-correct { color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 4px 8px; border-radius: 4px; }
+    .user-wrong { color: #c62828; text-decoration: line-through; font-weight: bold; background: #ffebee; padding: 4px 8px; border-radius: 4px; }
+    .correct-answer-hl { background: #e8f5e9; padding: 12px; border-radius: 6px; margin: 12px 0; font-weight: bold; color: #2e7d32; }
+    .explanation { background: #f5faff; padding: 16px; border-radius: 8px; margin-top: 16px; border-left: 5px solid #1976d2; }
     #timer { font-size: 1.3rem; color: #d81b60; font-weight: bold; }
   </style>
 </head>
 <body>
 
-<h1>FUPRE GST 100L CBT Practice (35 Questions)</h1>
+<h1>FUPRE Mathematics CBT Practice</h1>
 <div class="info-box">
-  Total Questions: 35  |  Recommended Time: 45–60 minutes
+  Syllabus: Elementary Sets, Induction, AP/GP, Partial Fractions, Complex Numbers, Trig, Binomial Theorem
   <div id="timer">Time taken: 0:00</div>
 </div>
 
@@ -93,101 +92,57 @@
 <div id="nav-buttons">
   <button id="prev">Previous</button>
   <button id="next">Next</button>
-  <button id="submit" style="background:#d32f2f;">Finish & Full Review</button>
+  <button id="submit" style="background:#d32f2f;">Finish & Review</button>
 </div>
 
 <div id="result">
-  <h2 style="text-align:center">Exam Finished!</h2>
+  <h2 style="text-align:center">Practice Complete!</h2>
   <p style="text-align:center; font-size:1.4rem;">
     Score: <strong id="score" class="score-good"></strong> / 35<br>
     Percentage: <strong id="percentage"></strong>%<br>
-    Time Taken: <strong id="time-taken"></strong> minutes
+    Time: <strong id="time-taken"></strong> minutes
   </p>
-
-  <div id="full-review">
-    <h3 style="text-align:center; margin:40px 0 20px;">Full Review: All 35 Questions with Your Answers & Explanations</h3>
-    <div id="review-list"></div>
-  </div>
-
-  <div style="text-align:center; margin:50px 0;">
-    <button onclick="location.reload()" style="font-size:1.2rem; padding:16px 40px;">Restart Quiz</button>
-  </div>
+  <div id="review-list"></div>
 </div>
 
 <script>
-// ────────────────────────────────────────────────
-// All 35 questions with correct answers & explanations
 const questions = [
-  { q: "In phonetics, the initial sound in \"Mudiaga\" (/m/) is classified as a:", o: ["A. Voiceless bilabial plosive", "B. Voiced bilabial nasal", "C. Voiced alveolar approximant", "D. Voiceless velar fricative"], a: "B",
-    exp: "/m/ is made with both lips (bilabial), air flows through the nose (nasal), and vocal cords vibrate (voiced) → voiced bilabial nasal." },
-  { q: "The vowel sound in \"travails\" (novel title) is /eɪ/, making it a:", o: ["A. Monophthong", "B. Diphthong", "C. Triphthong", "D. Schwa"], a: "B",
-    exp: "/eɪ/ glides from /e/ to /ɪ/ in one syllable → diphthong (two vowel sounds together)." },
-  { q: "Stress pattern in \"degradation\" (environmental theme in the novel) places primary stress on:", o: ["A. de-", "B. gra-", "C. da-", "D. tion"], a: "B",
-    exp: "de-gra-DA-tion → primary stress on second syllable (gra-), common in words ending -ation." },
-  { q: "Intonation for the exclamatory sentence \"Overcome your travails!\" in a dramatic reading of the novel would typically be:", o: ["A. Rising", "B. Falling", "C. Rise-fall", "D. Level"], a: "B",
-    exp: "Exclamations usually end with falling intonation to show strong emotion/emphasis." },
-  { q: "Punctuation correction: \"Mudiagas clubfoot a result of pollution hindered his mobility.\" Missing:", o: ["A. Apostrophe in \"Mudiagas\" and comma after \"clubfoot\"", "B. Colon after \"pollution\"", "C. Dash after \"hindered\"", "D. No error"], a: "A",
-    exp: "Should be \"Mudiaga's clubfoot, a result of pollution, hindered his mobility.\" → possessive apostrophe + commas for appositive phrase." },
-  { q: "In punctuating dialogue from the novel: \"Education is key Mudiaga\" requires:", o: ["A. Comma after \"key\"", "B. Semicolon after \"key\"", "C. Quotation marks around the whole", "D. Exclamation mark only"], a: "A",
-    exp: "Direct address needs comma: \"Education is key, Mudiaga.\"" },
-  { q: "For a sentence listing effects of oil flaring: \"It causes health issues environmental damage and corruption\" – insert:", o: ["A. Commas after \"issues\" and \"damage\"", "B. Semicolons throughout", "C. Dashes for emphasis", "D. Colons for introduction"], a: "A",
-    exp: "Oxford comma optional but clear: \"health issues, environmental damage, and corruption.\"" },
-  { q: "Apostrophe usage in novel summary: \"The villagers suffering from companies negligence\" corrected to:", o: ["A. villagers' suffering; companies' negligence", "B. villager's suffering; company's negligence", "C. villagers suffering's; companies negligence's", "D. No change needed"], a: "A",
-    exp: "Plural possessive: villagers' (many villagers), companies' (many companies)." },
-  { q: "A formal letter from Mudiaga to oil companies protesting exploitation should use which closing if recipient unnamed?", o: ["A. Yours sincerely", "B. Yours faithfully", "C. Best regards", "D. Cheers"], a: "B",
-    exp: "When name unknown → \"Yours faithfully\". If name known → \"Yours sincerely\"." },
-  { q: "In a memo to community leaders on resilience (novel theme), the \"Subject\" line should be:", o: ["A. Concise and action-oriented, e.g., \"Addressing Disability Stigma\"", "B. A full paragraph", "C. Omitted for brevity", "D. Placed at the end"], a: "A",
-    exp: "Memo subject lines are short, clear, and tell the purpose immediately." },
-  { q: "Key difference between letter and memo in reporting novel events:", o: ["A. Memo lacks salutation; letter has formal close", "B. Letter is internal; memo external", "C. Memo uses paragraphs; letter bullet points", "D. Both require enclosures"], a: "A",
-    exp: "Memo is internal → no salutation/close usually. Letter is external/formal → has greeting & closing." },
-  { q: "A report on Niger Delta pollution (as depicted) would structure \"Methodology\" to describe:", o: ["A. Data collection methods, e.g., interviews with villagers", "B. Conclusions only", "C. Title and abstract", "D. Personal opinions"], a: "A",
-    exp: "Methodology explains how data was gathered (surveys, interviews, observation)." },
-  { q: "In report writing, the \"Discussion\" section for novel-inspired analysis uses which tense for interpreting findings?", o: ["A. Present simple for timeless truths", "B. Past perfect for background", "C. Future continuous for predictions", "D. Conditional for hypotheticals"], a: "A",
-    exp: "Discussion interprets results → present simple for general truths (e.g. 'Pollution causes health issues')." },
-  { q: "Executive summary in a report on environmental travails should:", o: ["A. Be concise, standalone, and highlight key points", "B. Include raw data tables", "C. Appear after appendices", "D. Use first-person narrative"], a: "A",
-    exp: "Executive summary = short overview that stands alone — key findings, recommendations, no details." },
-  { q: "Effective reading of the novel involves critical analysis to infer that Mudiaga's clubfoot symbolizes:", o: ["A. Broader ecological and social injustices", "B. Personal failure only", "C. Wealth from oil", "D. Village prosperity"], a: "A",
-    exp: "Clubfoot represents harm from oil pollution/corruption — wider injustice in Niger Delta." },
-  { q: "Scanning the novel would quickly reveal:", o: ["A. Specific instances of corruption in chapters", "B. Phonetic details of names", "C. Full character backstories", "D. Punctuation styles"], a: "A",
-    exp: "Scanning = fast reading to find specific info (e.g. corruption mentions)." },
-  { q: "SQ3R strategy applied to the novel's pollution descriptions requires:", o: ["A. Surveying for themes, questioning implications, reading details, reciting key events, reviewing inferences", "B. Skimming tenses only", "C. Ignoring context", "D. Vocalizing every word"], a: "A",
-    exp: "SQ3R: Survey, Question, Read, Recite, Review — active reading method." },
-  { q: "Active to passive: \"Oil flaring caused Mudiaga's disability.\"", o: ["A. Mudiaga's disability was caused by oil flaring.", "B. Disability causes oil flaring for Mudiaga.", "C. Oil flaring is causing disability.", "D. Caused was Mudiaga's disability by flaring."], a: "A",
-    exp: "Object becomes subject, agent with 'by', tense preserved." },
-  { q: "Passive emphasis in novel summary: \"The environment has been degraded by corruption\" focuses on:", o: ["A. The degraded environment over the agent", "B. Corrupt individuals", "C. Future fixes", "D. Active protests"], a: "A",
-    exp: "Passive shifts focus to the receiver (environment) rather than doer (corruption)." },
-  { q: "Identify passive: \"Villagers were burdened by exploitation.\"", o: ["A. Correct passive past simple", "B. Active present", "C. Passive future", "D. Incorrect form"], a: "A",
-    exp: "Were + past participle = passive voice, past simple tense." },
-  { q: "Direct to indirect: Mudiaga said, \"I will overcome prejudice.\"", o: ["A. Mudiaga said that he would overcome prejudice.", "B. Mudiaga says he will overcome.", "C. Mudiaga said he overcomes prejudice.", "D. Prejudice would be overcome, said Mudiaga."], a: "A",
-    exp: "Will → would, I → he, no backshift needed for reporting verb in past." },
-  { q: "Indirect with command: \"Fight corruption,\" the elder urged.", o: ["A. The elder urged them to fight corruption.", "B. The elder urges fighting corruption.", "C. Corruption fight was urged.", "D. Urged the elder to fight."], a: "A",
-    exp: "Commands in indirect: reporting verb + to-infinitive." },
-  { q: "Error in indirect: She exclaimed, \"What travails!\" → She exclaimed what travails. Corrected:", o: ["A. She exclaimed what travails those were.", "B. She exclaims what travails.", "C. What travails she exclaimed.", "D. No change"], a: "A",
-    exp: "Exclamations in indirect need restructuring with 'that' or rephrasing." },
-  { q: "Tense: \"Mudiaga has been struggling since birth due to pollution.\"", o: ["A. Present perfect continuous", "B. Simple past", "C. Future perfect", "D. Past continuous"], a: "A",
-    exp: "Has been + -ing = present perfect continuous (action started in past, continues now)." },
-  { q: "Correct tense for ongoing theme: \"Corruption _____ (destroy) the Delta for years.\"", o: ["A. Has been destroying", "B. Destroyed", "C. Will destroy", "D. Had destroyed"], a: "A",
-    exp: "Present perfect continuous for action starting in past and still relevant/effect ongoing." },
-  { q: "Novel's narrative tense predominantly uses past simple to:", o: ["A. Reflect on past events like Mudiaga's birth", "B. Predict future resilience", "C. Describe current pollution", "D. Condition hypothetical outcomes"], a: "A",
-    exp: "Stories/novels typically use past simple for events in the narrative timeline." },
-  { q: "Future perfect in context: \"By adulthood, Mudiaga _____ all prejudices.\"", o: ["A. Will have overcome", "B. Overcomes", "C. Had overcome", "D. Is overcoming"], a: "A",
-    exp: "Future perfect = will have + past participle (action completed before future point)." },
-  { q: "In phonetics, /k/ in \"clubfoot\" (Mudiaga's condition) is:", o: ["A. Voiceless velar plosive", "B. Voiced labial stop", "C. Fricative alveolar", "D. Nasal bilabial"], a: "A",
-    exp: "/k/ = back of tongue + soft palate (velar), sudden release (plosive), no vocal cord vibration (voiceless)." },
-  { q: "Punctuation in complex sentence: \"Though disabled Mudiaga excelled; education was his anchor.\"", o: ["A. Comma after \"disabled\"", "B. Semicolon to dash", "C. Colon after \"excelled\"", "D. No change"], a: "A",
-    exp: "Subordinate clause at start → comma after: \"Though disabled, Mudiaga excelled...\"" },
-  { q: "Memo on novel lessons would include \"cc\" for:", o: ["A. Copying relevant parties like community leaders", "B. Closing signature", "C. Subject only", "D. Attachments"], a: "A",
-    exp: "cc = carbon copy → send copies to others who need to know." },
-  { q: "Report recommendations on exploitation use:", o: ["A. Imperative tense, e.g., \"Implement reforms\"", "B. Descriptive past", "C. Narrative present", "D. Question form"], a: "A",
-    exp: "Recommendations are direct suggestions → imperative mood (do this, improve that)." },
-  { q: "Effective reading inference: The novel implies education counters:", o: ["A. Disability and corruption", "B. Oil wealth", "C. Village isolation", "D. Physical strength"], a: "A",
-    exp: "Mudiaga uses education to overcome disability stigma and fight corruption → education as empowerment tool." },
-  { q: "Passive in reports: \"Reforms must be enacted\" is preferred for:", o: ["A. Objectivity and focus on action", "B. Personal blame", "C. Shortness", "D. Drama"], a: "A",
-    exp: "Passive in formal reports avoids naming agent → sounds objective and action-focused." },
-  { q: "Indirect with time adverb: \"We protest tomorrow,\" villagers said.", o: ["A. Villagers said they would protest the next day.", "B. Villagers say protest tomorrow.", "C. Protested tomorrow, said villagers.", "D. They protest said villagers."], a: "A",
-    exp: "Tomorrow → the next day in reported speech (backshift + time shift)." },
-  { q: "Tense mix in summary: \"Mudiaga was born disabled but has since inspired change.\"", o: ["A. Past simple and present perfect", "B. All future", "C. Continuous only", "D. Perfect continuous"], a: "A",
-    exp: "Was born = past simple (completed event); has inspired = present perfect (past action with present relevance)." }
+  { q: "Given U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, A = {2, 4, 6, 8, 10}, and B = {1, 2, 3, 4, 5}. Find (A ∩ B)'.", o: ["A. {1, 3, 5, 6, 7, 8, 9, 10}", "B. {2, 4}", "C. {1, 2, 3, 4, 5, 6, 8, 10}", "D. {6, 7, 8, 9, 10}"], a: "A", exp: "Intersection A ∩ B is {2, 4}. The complement (') includes everything in U except 2 and 4." },
+  { q: "In Mathematical Induction, the assumption that P(k) is true is used to prove:", o: ["A. P(1)", "B. P(k + 1)", "C. P(n) for all negative integers", "D. P(0)"], a: "B", exp: "The inductive step assumes truth for 'k' to show that truth inevitably follows for 'k+1'." },
+  { q: "The 15th term of the AP: 2, 5, 8, ... is:", o: ["A. 41", "B. 44", "C. 47", "D. 50"], a: "B", exp: "Tn = a + (n-1)d. Here 2 + (14)(3) = 2 + 42 = 44." },
+  { q: "Find the sum to infinity of 27, 9, 3, 1, ...", o: ["A. 81", "B. 40.5", "C. 54", "D. 39"], a: "B", exp: "S∞ = a / (1 - r). Here 27 / (1 - 1/3) = 27 / (2/3) = 40.5." },
+  { q: "What is the result of i^402?", o: ["A. 1", "B. -1", "C. i", "D. -i"], a: "B", exp: "402 divided by 4 leaves a remainder of 2. i^2 = -1." },
+  { q: "The modulus of z = -5 + 12i is:", o: ["A. 7", "B. 13", "C. 17", "D. 169"], a: "B", exp: "Modulus = √(x² + y²) = √((-5)² + 12²) = √(25 + 144) = 13." },
+  { q: "Convert 315 degrees to radians.", o: ["A. 7π/4", "B. 5π/4", "C. 3π/4", "D. 11π/6"], a: "A", exp: "315 * (π/180) = 7π/4." },
+  { q: "Which identity is equivalent to sin(2θ)?", o: ["A. cos²θ - sin²θ", "B. 2sinθcosθ", "C. 2sinθ", "D. sin²θ"], a: "B", exp: "This is a fundamental double-angle identity." },
+  { q: "How many proper subsets does a set with 4 elements have?", o: ["A. 16", "B. 15", "C. 4", "D. 8"], a: "B", exp: "Total subsets = 2^n = 16. Proper subsets exclude the set itself (16 - 1 = 15)." },
+  { q: "Find the constant term in the expansion of (x + 1/x)^4.", o: ["A. 4", "B. 6", "C. 1", "D. 0"], a: "B", exp: "The middle term where r=2: 4C2 * x^(4-2) * (1/x)^2 = 6." },
+  // ... adding more logic to reach 35 based on previous data
+  { q: "Decompose (5x - 1) / [(x-3)(x+1)] into partial fractions constants A and B.", o: ["A. A=3.5, B=1.5", "B. A=2, B=3", "C. A=5, B=-1", "D. A=1.5, B=3.5"], a: "A", exp: "Using cover-up: A = (5(3)-1)/(3+1) = 14/4 = 3.5. B = (5(-1)-1)/(-1-3) = -6/-4 = 1.5." },
+  { q: "What is (1 - i)^2?", o: ["A. 2i", "B. -2i", "C. 2", "D. 0"], a: "B", exp: "(1-i)(1-i) = 1 - 2i + i² = 1 - 2i - 1 = -2i." },
+  { q: "If tan θ = 1, find the general solution in radians.", o: ["A. nπ + π/4", "B. 2nπ + π/4", "C. nπ - π/4", "D. π/4"], a: "A", exp: "Tangent period is π, so general solution is nπ + principal angle." },
+  { q: "The sum of the first n terms of an AP is Sn = 2n² + n. Find the first term.", o: ["A. 2", "B. 3", "C. 5", "D. 1"], a: "B", exp: "a = S1. 2(1)² + 1 = 3." },
+  { q: "What is the 4th term of (x + 2)^5?", o: ["A. 10x²", "B. 80x²", "C. 40x³", "D. 160x"], a: "B", exp: "T4 = 5C3 * x^(5-3) * 2^3 = 10 * x² * 8 = 80x²." },
+  { q: "If n(A)=15, n(B)=12, and n(A∪B)=20, find n(A∩B).", o: ["A. 7", "B. 3", "C. 5", "D. 27"], a: "A", exp: "15 + 12 - 20 = 7." },
+  { q: "In an infinite GP, S = 12 and r = 1/4. Find a.", o: ["A. 3", "B. 9", "C. 16", "D. 4"], a: "B", exp: "12 = a/(1 - 0.25) -> a = 12 * 0.75 = 9." },
+  { q: "The value of cos(150 degrees) is:", o: ["A. 1/2", "B. -√3/2", "C. √3/2", "D. -1/2"], a: "B", exp: "Cos is negative in 2nd quadrant. cos(180-30) = -cos(30) = -√3/2." },
+  { q: "Which of these is the correct setup for (x²+1)/(x-1)³?", o: ["A. A/(x-1) + B/(x-1)² + C/(x-1)³", "B. (Ax+B)/(x-1)³", "C. A/(x-1)³", "D. A/x + B/1"], a: "A", exp: "Repeated linear factors build up powers from 1 to n." },
+  { q: "The product of (2+3i) and its conjugate is:", o: ["A. 13", "B. -5", "C. 4-9i", "D. 13+12i"], a: "A", exp: "(2+3i)(2-3i) = 2² + 3² = 13." },
+  { q: "In the Argand diagram, z = -3i is on:", o: ["A. Positive Imaginary axis", "B. Negative Imaginary axis", "C. Negative Real axis", "D. 3rd Quadrant"], a: "B", exp: "Real part is 0, imaginary is -3." },
+  { q: "Which sequence is an AP?", o: ["A. 1, 2, 4", "B. 10, 7, 4", "C. 1, 4, 9", "D. 2, 3, 5"], a: "B", exp: "Common difference is -3." },
+  { q: "1/i is equal to:", o: ["A. i", "B. -i", "C. 1", "D. -1"], a: "B", exp: "Multiply top/bottom by i: i/i² = i/-1 = -i." },
+  { q: "Pascal's Triangle rows provide:", o: ["A. Powers", "B. Coefficients", "C. Roots", "D. Factors"], a: "B", exp: "They provide binomial coefficients nCr." },
+  { q: "If A ∩ B = A, then:", o: ["A. B is a subset of A", "B. A is a subset of B", "C. A and B are disjoint", "D. A is the complement of B"], a: "B", exp: "If intersecting with B takes nothing from A, A must be inside B." },
+  { q: "The sum of the first 20 odd numbers is:", o: ["A. 200", "B. 400", "C. 380", "D. 420"], a: "B", exp: "Sum of first n odd numbers = n²." },
+  { q: "Basis step of induction for n ≥ 1 usually checks:", o: ["A. n=k", "B. n=1", "C. n=0", "D. n=k+1"], a: "B", exp: "Basis step checks the first valid integer." },
+  { q: "tan(45) + sin(90) equals:", o: ["A. 1", "B. 2", "C. 0", "D. √2"], a: "B", exp: "1 + 1 = 2." },
+  { q: "The general term of (x+a)^n is:", o: ["A. nCr x^r a^r", "B. nCr x^(n-r) a^r", "C. x^n + a^n", "D. n! x a"], a: "B", exp: "This is the standard binomial formula." },
+  { q: "What is the 3rd row of Pascal's Triangle (starting from row 0)?", o: ["A. 1 2 1", "B. 1 3 3 1", "C. 1 4 6 4 1", "D. 1 1"], a: "B", exp: "Row 0: 1, Row 1: 1 1, Row 2: 1 2 1, Row 3: 1 3 3 1." },
+  { q: "In GP, if a=5 and r=2, find T4.", o: ["A. 40", "B. 80", "C. 20", "D. 10"], a: "A", exp: "5 * 2³ = 5 * 8 = 40." },
+  { q: "Partial fraction of 1/[x(x²+1)] involves:", o: ["A. A/x + B/(x²+1)", "B. A/x + (Bx+C)/(x²+1)", "C. A/x + B/x²", "D. 1/x³"], a: "B", exp: "Irreducible quadratics need linear numerators." },
+  { q: "Symmetric difference of {2,3,5} and {1,2,4} is:", o: ["A. {2}", "B. {1,3,4,5}", "C. {1,2,3,4,5}", "D. {1}"], a: "B", exp: "Elements in one or the other, but not both." },
+  { q: "If sin θ = -1/2 and cos θ > 0, which quadrant?", o: ["A. 2", "B. 4", "C. 3", "D. 1"], a: "B", exp: "Sine is negative and Cosine is positive only in Quadrant 4." },
+  { q: "Which term of 5, 8, 11... is 35?", o: ["A. 10", "B. 11", "C. 12", "D. 9"], a: "B", exp: "35 = 5 + (n-1)3 -> 30 = 3(n-1) -> 10 = n-1 -> n = 11." }
 ];
 
 let currentQuestion = 0;
@@ -195,21 +150,20 @@ let answers = new Array(questions.length).fill(null);
 let startTime = Date.now();
 let timerInterval;
 
-const quizDiv     = document.getElementById("quiz");
-const prevBtn     = document.getElementById("prev");
-const nextBtn     = document.getElementById("next");
-const submitBtn   = document.getElementById("submit");
-const resultDiv   = document.getElementById("result");
-const reviewList  = document.getElementById("review-list");
+const quizDiv = document.getElementById("quiz");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+const submitBtn = document.getElementById("submit");
+const resultDiv = document.getElementById("result");
+const reviewList = document.getElementById("review-list");
 
-// Render questions
 questions.forEach((q, i) => {
   const div = document.createElement("div");
   div.className = "question";
   div.id = `q${i}`;
   div.innerHTML = `
     <h3>Question ${i+1} of 35</h3>
-    <p>${q.q}</p>
+    <p style="font-weight:bold; font-size:1.1rem;">${q.q}</p>
     <div class="options">
       ${q.o.map((opt, idx) => `
         <label>
@@ -225,17 +179,8 @@ questions.forEach((q, i) => {
 function showQuestion(n) {
   document.querySelectorAll(".question").forEach(el => el.classList.remove("active"));
   document.getElementById(`q${n}`).classList.add("active");
-
   prevBtn.disabled = n === 0;
   nextBtn.textContent = n === questions.length - 1 ? "Finish" : "Next";
-  nextBtn.style.background = n === questions.length - 1 ? "#388e3c" : "#1976d2";
-
-  const sel = answers[n];
-  if (sel) {
-    const radio = document.querySelector(`input[name="q${n}"][value="${sel}"]`);
-    if (radio) radio.checked = true;
-  }
-
   currentQuestion = n;
 }
 
@@ -248,8 +193,6 @@ function updateTimer() {
 
 function showResult() {
   clearInterval(timerInterval);
-  const timeTaken = ((Date.now() - startTime) / 60000).toFixed(2);
-
   let score = 0;
   answers.forEach((ans, i) => { if (ans === questions[i].a) score++; });
 
@@ -259,63 +202,33 @@ function showResult() {
 
   document.getElementById("score").textContent = score;
   document.getElementById("percentage").textContent = ((score / 35) * 100).toFixed(1);
-  document.getElementById("time-taken").textContent = timeTaken;
-
-  reviewList.innerHTML = "";
+  document.getElementById("time-taken").textContent = ((Date.now() - startTime) / 60000).toFixed(2);
 
   questions.forEach((q, i) => {
     const userAns = answers[i] || "Not answered";
-    const correctLetter = q.a;
-    const correctIdx = q.o.findIndex(o => o.startsWith(correctLetter));
-    const correctText = q.o[correctIdx] || correctLetter;
-
+    const isCorrect = userAns === q.a;
     const div = document.createElement("div");
     div.className = "review-q";
     div.innerHTML = `
-      <h4>Question ${i+1}: ${q.q}</h4>
-      <div class="options">
-        ${q.o.map((opt, idx) => {
-          const letter = String.fromCharCode(65 + idx);
-          let className = "";
-          if (letter === userAns) {
-            className = (userAns === correctLetter) ? "user-correct" : "user-wrong";
-          }
-          if (letter === correctLetter) {
-            className += " correct-answer";
-          }
-          return `<div class="${className.trim()}">${opt}</div>`;
-        }).join("")}
-      </div>
-      <div class="correct-answer">Correct answer: ${correctText}</div>
-      <div class="explanation"><strong>Explanation:</strong><br>${q.exp}</div>
+      <h4>Question ${i+1}</h4>
+      <p>${q.q}</p>
+      <p>Your Answer: <span class="${isCorrect ? 'user-correct' : 'user-wrong'}">${userAns}</span></p>
+      <div class="correct-answer-hl">Correct Answer: ${q.a}</div>
+      <div class="explanation"><strong>Step-by-Step:</strong> ${q.exp}</div>
     `;
     reviewList.appendChild(div);
   });
 }
 
-// Navigation & Submit
-prevBtn.onclick = () => {
-  if (currentQuestion > 0) showQuestion(currentQuestion - 1);
-};
-
+prevBtn.onclick = () => showQuestion(currentQuestion - 1);
 nextBtn.onclick = () => {
-  const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
-  if (selected) answers[currentQuestion] = selected.value;
-
-  if (currentQuestion < questions.length - 1) {
-    showQuestion(currentQuestion + 1);
-  } else {
-    showResult();
-  }
+  const sel = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+  if (sel) answers[currentQuestion] = sel.value;
+  if (currentQuestion < questions.length - 1) showQuestion(currentQuestion + 1);
+  else showResult();
 };
+submitBtn.onclick = () => { if(confirm("End exam?")) showResult(); };
 
-submitBtn.onclick = () => {
-  if (confirm("Finish and review all 35 questions?")) {
-    showResult();
-  }
-};
-
-// Init
 showQuestion(0);
 timerInterval = setInterval(updateTimer, 1000);
 </script>
